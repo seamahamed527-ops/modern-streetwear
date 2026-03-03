@@ -8,12 +8,12 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      background: #1a1a1a; /* ডার্ক থিম স্ট্রিটওয়্যারের জন্য */
+      background: #1a1a1a; 
       color: #fff;
     }
     header {
       background: #000;
-      color: #ff4757; /* এনিমে ভাইব কালার */
+      color: #ff4757; 
       padding: 40px 20px;
       text-align: center;
       border-bottom: 3px solid #ff4757;
@@ -29,11 +29,6 @@
       margin: auto;
       padding: 20px;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #ccc;
-    }
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -47,10 +42,28 @@
       text-align: center;
       transition: transform 0.3s;
     }
-    .card:hover {
-      transform: translateY(-10px);
+    
+    /* স্লাইডার স্টাইল */
+    .img-slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      margin-bottom: 15px;
     }
-    .card img {
+    .img-slider::-webkit-scrollbar {
+      display: none;
+    }
+    .img-slider img {
+      flex: 0 0 100%;
+      width: 100%;
+      border-radius: 8px;
+      scroll-snap-align: start;
+      object-fit: cover;
+    }
+
+    .card img.single-img {
       max-width: 100%;
       border-radius: 8px;
       margin-bottom: 15px;
@@ -67,16 +80,12 @@
     }
     .buy-btn {
       display: inline-block;
-      background: #25d366; /* হোয়াটসঅ্যাপ গ্রিন */
+      background: #25d366; 
       color: white;
       text-decoration: none;
       padding: 12px 25px;
       border-radius: 50px;
       font-weight: bold;
-      transition: background 0.3s;
-    }
-    .buy-btn:hover {
-      background: #128c7e;
     }
     footer {
       background: #000;
@@ -84,7 +93,6 @@
       text-align: center;
       padding: 25px;
       margin-top: 50px;
-      border-top: 1px solid #333;
     }
   </style>
 </head>
@@ -96,31 +104,34 @@
 </header>
 
 <div class="container">
-  <h2>Featured Collection</h2>
   <div class="products">
 
     <div class="card">
-      <img src="1772537135821.png">
-      <h3>Print Oversized T shirt</h3>
-      <p>Premium 180 GSM cotton, drop shoulder fit.</p>
-      <div class="price">৳ 400</div>
-      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Gojo Satoru Oversized T-shirt." class="buy-btn">Order on WhatsApp</a>
+      <div class="img-slider">
+        <img src="1772536906585.png">
+        <img src="1772537055301.png">
+        <img src="1772537135821.png">
+      </div>
+      <h3>Premium Oversized Pack</h3>
+      <p>৩টি এক্সক্লুসিভ ডিজাইনের কালেকশন।</p>
+      <div class="price">৳ 650</div>
+      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Premium Oversized Pack." class="buy-btn">Order on WhatsApp</a>
     </div>
 
     <div class="card">
-      <img src="https://via.placeholder.com/300x400?text=Uchiha+Clan+Tee" alt="Naruto T-shirt">
-      <h3>High Quality Drop shoulder</h3>
-      <p>High-quality DTF print, perfect for streetwear.</p>
-      <div class="price">৳ 500</div>
-      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Uchiha Clan T-shirt." class="buy-btn">Order on WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <img src="https://via.placeholder.com/300x400?text=Solo+Leveling+Tee" alt="Solo Leveling">
+      <img src="1772537369194.png" class="single-img">
       <h3>Shadow Monarch Tee</h3>
       <p>Heavyweight fabric, durable and stylish.</p>
       <div class="price">৳ 700</div>
       <a href="https://wa.me/8801956273611?text=Hi, I want to order the Shadow Monarch T-shirt." class="buy-btn">Order on WhatsApp</a>
+    </div>
+
+    <div class="card">
+      <img src="1772537449513.png" class="single-img">
+      <h3>Anime Special Edition</h3>
+      <p>High quality DTF print for streetwear lovers.</p>
+      <div class="price">৳ 590</div>
+      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Anime Special Edition T-shirt." class="buy-btn">Order on WhatsApp</a>
     </div>
 
   </div>
