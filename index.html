@@ -3,46 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Pro Version</title>
+    <title>Siyam Streetwear | Order Status & Bank Version</title>
     <style>
         :root { --daraz-orange: #f85606; --bg: #eff0f5; }
         body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 100px; }
         
-        /* Header */
         .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; }
         .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; margin: 0 15px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
         .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
 
-        /* Slider */
         .slider-container { width: 100%; overflow-x: auto; display: flex; scroll-snap-type: x mandatory; scroll-behavior: smooth; border-radius: 8px; }
         .slide-img { min-width: 100%; height: 220px; object-fit: cover; scroll-snap-align: start; }
         .swipe-hint { font-size: 10px; color: #777; text-align: right; margin-top: 5px; padding-right: 5px;}
 
-        /* Pages */
         .page { display: none; padding: 15px; box-sizing: border-box; }
         .active-page { display: block; }
 
-        /* Card Style */
         .card { background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 15px; }
         .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        /* Payment UI */
         .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 12px; margin-bottom: 10px; cursor: pointer; background: #fff; }
         .pay-card img { width: 35px; height: 35px; margin-right: 15px; object-fit: contain; }
         .pay-input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; margin-bottom: 10px; font-size: 14px; }
 
-        /* Account */
+        /* Status Badge */
+        .status { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; text-transform: uppercase; float: right; }
+        .pending { background: #fff3cd; color: #856404; }
+        .confirmed { background: #d4edda; color: #155724; }
+
         .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; text-align: center; }
         .u-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; margin-bottom: 10px; cursor: pointer; }
         .id-badge { background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 10px; font-size: 11px; margin-top: 5px; display: inline-block;}
         .wallet-box { background: #fff; margin: -20px 20px 10px 20px; border-radius: 8px; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
 
-        /* Admin */
         #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; overflow-y: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 
-        /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
         .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
     </style>
@@ -60,8 +57,8 @@
     <div class="product-grid">
         <div class="card p-card" data-title="premium oversized t-shirt">
             <div class="slider-container">
-                <img src="1772537055301.png" class="slide-img" onerror="this.src='https://via.placeholder.com/400x220?text=Product+Image+1'">
-                <img src="1772536906585.png" class="slide-img" onerror="this.src='https://via.placeholder.com/400x220?text=Product+Image+2'">
+                <img src="1772537055301.png" class="slide-img">
+                <img src="1772536906585.png" class="slide-img">
             </div>
             <div class="swipe-hint">সোয়াইপ করুন (➔)</div>
             <p style="font-weight:bold; margin-bottom:5px;">Premium Oversized T-shirt</p>
@@ -74,7 +71,7 @@
 <div id="checkPage" class="page">
     <h3 style="margin-top:0;">Payment Method</h3>
     <div class="pay-card" onclick="selectMethod('Wallet Balance')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331711.png"> Use Wallet (৳<span id="payWallet">0</span>)
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331711.png"> Wallet Balance (৳<span id="payWallet">0</span>)
     </div>
     <div class="pay-card" onclick="selectMethod('bKash')">
         <img src="https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg"> bKash (01956273611)
@@ -85,13 +82,17 @@
     <div class="pay-card" onclick="selectMethod('Rocket')">
         <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png"> Rocket (01956273611)
     </div>
+    <div class="pay-card" onclick="selectMethod('Bank')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png"> Bank Transfer (Details)
+    </div>
     
     <div id="confirmBox" style="display:none; margin-top:20px;">
         <div class="card" style="border: 2px solid var(--daraz-orange);">
             <p id="payGuide" style="font-size:13px;"></p>
             <div id="manualInputs">
-                <input type="number" id="senderNum" class="pay-input" placeholder="আপনার মোবাইল নাম্বার দিন">
-                <input type="text" id="trxInput" class="pay-input" placeholder="TrxID (ট্রানজেকশন আইডি) দিন">
+                <input type="text" id="accName" class="pay-input" placeholder="আপনার নাম / একাউন্ট নাম">
+                <input type="number" id="senderNum" class="pay-input" placeholder="আপনার মোবাইল / কার্ডের শেষ ৪ ডিজিট">
+                <input type="text" id="trxInput" class="pay-input" placeholder="Transaction ID (TrxID)">
             </div>
             <button class="btn-buy" onclick="submitFinalOrder()">CONFIRM ORDER</button>
         </div>
@@ -116,7 +117,7 @@
 
     <div style="padding:15px;">
         <div class="card" style="display:flex; justify-content:space-around; text-align:center; font-size:11px;">
-            <div onclick="loadMyOrders()">🚚<br>Shipping</div>
+            <div onclick="loadMyOrders()">🛒<br>Orders</div>
             <div onclick="adminDoor()">🧬<br>Admin</div>
         </div>
         <h4>Order History</h4>
@@ -126,19 +127,19 @@
 
 <div id="adminPanel">
     <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3>Admin Panel</h3>
-        <button onclick="document.getElementById('adminPanel').style.display='none'">X</button>
+        <h3>Admin Dashboard</h3>
+        <button onclick="document.getElementById('adminPanel').style.display='none'">Close</button>
     </div>
     
     <div class="card" style="font-size:12px;">
-        <p><b>Manage Balance (User ID অনুযায়ী)</b></p>
+        <p><b>Manage User Balance</b></p>
         <input type="text" id="admUID" placeholder="User ID" style="width:30%; padding:5px;">
         <input type="number" id="admAmt" placeholder="Amount" style="width:30%; padding:5px;">
-        <button onclick="admUpdateBal()">Set Balance</button>
+        <button onclick="admUpdateBal()">Set</button>
     </div>
 
     <table>
-        <thead><tr><th>User ID</th><th>Product</th><th>Details</th><th>Action</th></tr></thead>
+        <thead><tr><th>User ID</th><th>Details</th><th>TrxID</th><th>Status</th><th>Action</th></tr></thead>
         <tbody id="adminTBody"></tbody>
     </table>
 </div>
@@ -153,24 +154,23 @@
     let currentItem = ""; let currentPrice = 0; let currentMethod = "";
     
     function initSystem() {
-        // রেন্ডম ইউজার আইডি জেনারেশন (একবারই হবে)
         if(!localStorage.getItem("u_id")) {
-            let randomID = "SY-" + Math.floor(1000 + Math.random() * 9000);
-            localStorage.setItem("u_id", randomID);
+            localStorage.setItem("u_id", "SY-" + Math.floor(1000 + Math.random() * 9000));
         }
-        
         let balance = localStorage.getItem("s_wallet") || "0";
         document.getElementById("uBalance").innerText = balance;
         document.getElementById("payWallet").innerText = balance;
         document.getElementById("uIDDisp").innerText = localStorage.getItem("u_id");
         document.getElementById("uNameDisp").innerText = (localStorage.getItem("u_name") || "Siyam Ahamed") + " ✎";
         if(localStorage.getItem("u_img")) document.getElementById("uPhoto").src = localStorage.getItem("u_img");
+        loadMyOrders();
     }
 
     function switchPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
         document.getElementById('navHeader').style.display = (id === 'accPage') ? 'none' : 'block';
+        if(id === 'accPage') loadMyOrders();
     }
 
     function buyProcess(name, price) {
@@ -181,12 +181,15 @@
     function selectMethod(m) {
         currentMethod = m;
         document.getElementById('confirmBox').style.display = 'block';
+        document.getElementById('manualInputs').style.display = 'block';
+        
         if(m === 'Wallet Balance') {
-            document.getElementById('payGuide').innerHTML = `Wallet থেকে ৳${currentPrice} কাটা হবে।`;
+            document.getElementById('payGuide').innerHTML = `ওয়ালেট থেকে ৳${currentPrice} কাটা হবে।`;
             document.getElementById('manualInputs').style.display = 'none';
+        } else if(m === 'Bank') {
+            document.getElementById('payGuide').innerHTML = `<b>Bank Details:</b><br>Bank: IFIC Bank<br>A/C Name: Siyam Ahamed<br>A/C No: 0195627361101<br>টাকা পাঠিয়ে নাম ও TrxID দিন।`;
         } else {
             document.getElementById('payGuide').innerHTML = `Send ৳${currentPrice} to <b>01956273611</b> (${m})`;
-            document.getElementById('manualInputs').style.display = 'block';
         }
     }
 
@@ -194,64 +197,30 @@
         let wallet = parseInt(localStorage.getItem("s_wallet") || "0");
         let phone = document.getElementById("senderNum").value;
         let trx = document.getElementById("trxInput").value;
+        let uName = document.getElementById("accName").value;
 
         if(currentMethod === 'Wallet Balance') {
             if(wallet < currentPrice) return alert("Low Balance!");
             localStorage.setItem("s_wallet", wallet - currentPrice);
-            phone = "WALLET"; trx = "PAID";
+            phone = "WALLET"; trx = "INTERNAL"; uName = "Wallet User";
         } else {
-            if(!phone || !trx) return alert("সব তথ্য দিন!");
+            if(!phone || !trx || !uName) return alert("সব তথ্য সঠিকভাবে দিন!");
         }
 
         let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
         orders.push({
             id: Date.now(),
             uID: localStorage.getItem("u_id"),
-            name: localStorage.getItem("u_name") || "User",
+            uName: uName,
             product: currentItem,
             phone: phone,
             trx: trx,
-            method: currentMethod
+            status: "Pending" // ডিফল্ট পেন্ডিং
         });
         localStorage.setItem("s_orders", JSON.stringify(orders));
-        alert("Order Successful!");
+        alert("অর্ডার পেন্ডিং এ আছে। অ্যাডমিন চেক করে কনফার্ম করবে।");
         initSystem();
         switchPage('accPage');
-    }
-
-    // অ্যাডমিন ফাংশনালিটি
-    function admUpdateBal() {
-        let targetID = document.getElementById("admUID").value;
-        let amt = document.getElementById("admAmt").value;
-        if(targetID === localStorage.getItem("u_id")) {
-            localStorage.setItem("s_wallet", amt);
-            initSystem();
-            alert("Balance Updated!");
-        } else {
-            alert("শুধুমাত্র লগইন করা ইউজার আইডিতে ব্যালেন্স দেওয়া যাবে (Demo Logic)");
-        }
-    }
-
-    function adminDoor() {
-        if(prompt("Admin Pass:") === "2314") {
-            document.getElementById("adminPanel").style.display = "block";
-            let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-            document.getElementById("adminTBody").innerHTML = orders.map((o, i) => `
-                <tr>
-                    <td>${o.uID}</td>
-                    <td>${o.product}</td>
-                    <td>${o.phone}<br>${o.trx}</td>
-                    <td><button onclick="delOrder(${i})">Del</button></td>
-                </tr>
-            `).reverse().join('');
-        }
-    }
-
-    function delOrder(i) {
-        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        orders.splice(orders.length - 1 - i, 1);
-        localStorage.setItem("s_orders", JSON.stringify(orders));
-        adminDoor();
     }
 
     function loadMyOrders() {
@@ -259,8 +228,62 @@
         let myID = localStorage.getItem("u_id");
         document.getElementById("myOrdersDisplay").innerHTML = orders
             .filter(o => o.uID === myID)
-            .map(o => `<div class="card">📦 ${o.product}<br><small>Trx: ${o.trx}</small></div>`)
-            .reverse().join('') || "No orders.";
+            .map(o => `
+                <div class="card">
+                    <span class="status ${o.status.toLowerCase()}">${o.status}</span>
+                    <b>📦 ${o.product}</b><br>
+                    <small>TrxID: ${o.trx}</small>
+                </div>
+            `).reverse().join('') || "অর্ডার লিস্ট খালি।";
+    }
+
+    function adminDoor() {
+        if(prompt("Admin Password:") === "2314") {
+            document.getElementById("adminPanel").style.display = "block";
+            refreshAdminTable();
+        }
+    }
+
+    function refreshAdminTable() {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        document.getElementById("adminTBody").innerHTML = orders.map((o, i) => `
+            <tr>
+                <td>${o.uID}</td>
+                <td>${o.product}<br>${o.uName}</td>
+                <td>${o.trx}</td>
+                <td><b>${o.status}</b></td>
+                <td>
+                    <button onclick="confirmOrder(${i})">✔</button>
+                    <button onclick="delOrder(${i})">✖</button>
+                </td>
+            </tr>
+        `).reverse().join('');
+    }
+
+    function confirmOrder(i) {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        // স্লাইস এর কারণে ইন্ডেক্স ঠিক করতে রিভার্স লজিক
+        let realIdx = orders.length - 1 - i;
+        orders[realIdx].status = "Confirmed";
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+        refreshAdminTable();
+    }
+
+    function delOrder(i) {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        let realIdx = orders.length - 1 - i;
+        orders.splice(realIdx, 1);
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+        refreshAdminTable();
+    }
+
+    function admUpdateBal() {
+        let tid = document.getElementById("admUID").value;
+        let amt = document.getElementById("admAmt").value;
+        if(tid === localStorage.getItem("u_id")) {
+            localStorage.setItem("s_wallet", amt);
+            initSystem(); alert("ব্যালেন্স আপডেট হয়েছে!");
+        } else { alert("Demo: শুধুমাত্র নিজের আইডিতে টেস্ট করা যাবে।"); }
     }
 
     function uploadPhoto(e) {
@@ -273,7 +296,7 @@
     }
 
     function updateName() {
-        let n = prompt("New Name:");
+        let n = prompt("নাম পরিবর্তন করুন:");
         if(n) { localStorage.setItem("u_name", n); initSystem(); }
     }
 
