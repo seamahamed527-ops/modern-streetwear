@@ -1,250 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Siyam Streetwear | Premium E-Shop</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --amazon-navy: #131921;
-      --flipkart-blue: #2874f0;
-      --accent-red: #ff4757;
-      --success-green: #388e3c;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f1f3f6; /* Flipkart gray background */
-      color: #333;
-    }
-
-    /* Amazon Inspired Header */
-    header {
-      background-color: var(--amazon-navy);
-      padding: 10px 5%;
-      color: white;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .logo { font-size: 1.5rem; font-weight: bold; color: #febd69; }
-
-    .search-bar {
-      display: flex;
-      flex-grow: 1;
-      margin: 0 20px;
-      max-width: 600px;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 4px 0 0 4px;
-      border: none;
-      outline: none;
-    }
-
-    .search-bar button {
-      padding: 10px 20px;
-      background-color: #febd69;
-      border: none;
-      border-radius: 0 4px 4px 0;
-      cursor: pointer;
-    }
-
-    /* Flipkart Style Grid */
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 15px;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    /* Premium Flip-Card Effect */
-    .card-container {
-      perspective: 1000px;
-      height: 480px;
-    }
-
-    .card {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border-radius: 8px;
-    }
-
-    .card-container:hover .card { transform: rotateY(180deg); }
-
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    /* Front Design */
-    .card-front .img-slider {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      height: 320px;
-      scrollbar-width: none;
-    }
-    .img-slider::-webkit-scrollbar { display: none; }
-    .img-slider img { flex: 0 0 100%; width: 100%; object-fit: cover; scroll-snap-align: start; }
-
-    .discount-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: var(--accent-red);
-      color: white;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 4px;
-    }
-
-    .info { padding: 15px; }
-    .title { font-size: 16px; font-weight: 500; margin: 5px 0; color: #212121; }
-    .price { font-size: 20px; font-weight: bold; color: #000; margin: 8px 0; }
-    .rating { color: #388e3c; font-size: 14px; font-weight: bold; }
-
-    /* Back Design (Amazon/Flipkart Details) */
-    .card-back {
-      transform: rotateY(180deg);
-      background: #fdfdfd;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .specs { margin: 20px 0; text-align: left; font-size: 14px; color: #666; }
-    .specs li { margin-bottom: 5px; }
-
-    .buy-now {
-      background: #fb641b; /* Flipkart orange */
-      color: white;
-      padding: 12px 30px;
-      border-radius: 2px;
-      text-decoration: none;
-      font-weight: bold;
-      text-transform: uppercase;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
-
-    /* WhatsApp Floating Button */
-    .wa-float {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #25d366;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-      transition: 0.3s;
-    }
-    .wa-float:hover { transform: scale(1.1); }
-
-    footer {
-      background: var(--amazon-navy);
-      color: #878787;
-      padding: 40px 5%;
-      margin-top: 50px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siyam Streetwear | Admin Panel Edition</title>
+    <style>
+        /* বেসিক স্টাইল */
+        body { font-family: 'Arial', sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        header { background: #131921; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .container { padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        
+        /* অ্যাডমিন প্যানেল ও টেবিল স্টাইল */
+        #adminDashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; overflow-y: auto; padding: 20px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #2874f0; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        
+        .admin-btn { background: #ff4757; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .close-btn { background: #333; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; float: right; }
+    </style>
 </head>
-<body>
+<body onload="checkUserStatus()">
 
 <header>
-  <div class="top-nav">
-    <div class="logo">SIYAM STREETWEAR</div>
-    <div style="font-size: 14px;">Sign In | Orders | 🛒</div>
-  </div>
-  <div class="search-bar">
-    <input type="text" placeholder="Search for premium anime t-shirts...">
-    <button>🔍</button>
-  </div>
+    <div style="font-size: 20px; font-weight: bold;">SIYAM STREETWEAR</div>
+    <div onclick="openAdmin()" style="cursor:pointer; font-size: 24px; padding: 0 10px;">⋮</div>
 </header>
 
 <div class="container">
-  <h2 style="margin-bottom: 25px;">Today's Exclusive Drops</h2>
-  
-  <div class="product-grid">
-
-    <div class="card-container">
-      <div class="card">
-        <div class="card-front">
-          <div class="discount-badge">60% OFF</div>
-          <div class="img-slider">
-            <img src="1772536906585.png">
-            <img src="1772537055301.png">
-            <img src="1772537135821.png">
-            <img src="1772537369194.png">
-            <img src="1772537449513.png">
-          </div>
-          <div class="info">
-            <div class="rating">4.8 ★ (120 Reviews)</div>
-            <div class="title">Premium Oversized T-shirt</div>
-            <div class="price">৳ 400 <span style="text-decoration: line-through; color: #878787; font-size: 14px;">৳ 1,000</span></div>
-            <p style="color: #388e3c; font-size: 12px; font-weight: bold;">FREE Delivery</p>
-          </div>
-        </div>
-        <div class="card-back">
-          <h3>Quick Specs</h3>
-          <ul class="specs">
-            <li>✅ 180 GSM Pure Cotton</li>
-            <li>✅ High-Density DTF Print</li>
-            <li>✅ Export Quality Stitching</li>
-            <li>✅ Oversized Street Fit</li>
-          </ul>
-          <a href="https://wa.me/8801956273611?text=Order: Premium Oversized T-shirt" class="buy-now">Buy Now</a>
-        </div>
-      </div>
-    </div>
-
+    <div id="welcomeMsg"></div>
+    
+    <div class="card">
+        <h3>Premium Oversized T-shirt</h3>
+        <p>দাম: ৳ 400</p>
+        <button onclick="makeOrder('Premium Oversized T-shirt')" style="background: #fb641b; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">অর্ডার করুন</button>
     </div>
 </div>
 
-<a href="https://wa.me/8801956273611" class="wa-float">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WhatsApp">
-</a>
+<div id="adminDashboard">
+    <button class="close-btn" onclick="closeAdmin()">বন্ধ করুন</button>
+    <h2 style="color: #131921;">অর্ডার ম্যানেজমেন্ট (গুগল শিট ভিউ)</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>কাস্টমারের নাম</th>
+                <th>পণ্যের নাম</th>
+                <th>তারিখ</th>
+                <th>স্ট্যাটাস</th>
+                <th>অ্যাকশন</th>
+            </tr>
+        </thead>
+        <tbody id="orderTableBody">
+            </tbody>
+    </table>
+</div>
 
-<footer>
-  <p>&copy; 2026 Siyam Streetwear Bangladesh | All Rights Reserved</p>
-  <p style="font-size: 12px;">Amazon, Flipkart & Daraz Inspired Design</p>
-</footer>
+<script>
+    // ১. কাস্টমার চেক ও অটো-লগইন
+    function checkUserStatus() {
+        let name = localStorage.getItem("c_name");
+        if (!name) {
+            name = prompt("আপনার নাম লিখুন:");
+            if (name) localStorage.setItem("c_name", name);
+        }
+        if(name) document.getElementById("welcomeMsg").innerHTML = "গোপন পাসওয়ার্ড দিয়ে অ্যাডমিন প্যানেল চেক করুন।";
+    }
+
+    // ২. অর্ডার সেভ করা
+    function makeOrder(pName) {
+        let customer = localStorage.getItem("c_name") || "অজানা কাস্টমার";
+        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
+        
+        let newOrder = {
+            customerName: customer,
+            productName: pName,
+            date: new Date().toLocaleString(),
+            status: "Pending"
+        };
+        
+        orders.push(newOrder);
+        localStorage.setItem("all_orders", JSON.stringify(orders));
+        
+        alert("অর্ডার সফল হয়েছে! সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন।");
+        window.location.href = "https://wa.me/8801956273611?text=আমি " + pName + " অর্ডার করতে চাই।";
+    }
+
+    // ৩. পাসওয়ার্ড দিয়ে অ্যাডমিন প্যানেল খোলা
+    function openAdmin() {
+        let pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
+        if (pass === "2314") { // তোমার দেওয়া গোপন পাসওয়ার্ড
+            document.getElementById("adminDashboard").style.display = "block";
+            loadOrders();
+        } else {
+            alert("ভুল পাসওয়ার্ড! এটি শুধু অ্যাডমিনের জন্য।");
+        }
+    }
+
+    // ৪. গুগল শিট স্টাইলে অর্ডার লোড করা
+    function loadOrders() {
+        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
+        let tableBody = document.getElementById("orderTableBody");
+        tableBody.innerHTML = "";
+
+        orders.forEach((order, index) => {
+            let row = `<tr>
+                <td>${order.customerName}</td>
+                <td>${order.productName}</td>
+                <td>${order.date}</td>
+                <td id="status-${index}">${order.status}</td>
+                <td><button onclick="confirmItem(${index})" style="background: green; color: white; border: none; padding: 5px; border-radius: 3px; cursor: pointer;">কনফার্ম</button></td>
+            </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function confirmItem(index) {
+        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
+        orders[index].status = "Confirmed ✅";
+        localStorage.setItem("all_orders", JSON.stringify(orders));
+        loadOrders(); // টেবিল রিফ্রেশ
+    }
+
+    function closeAdmin() {
+        document.getElementById("adminDashboard").style.display = "none";
+    }
+</script>
 
 </body>
 </html>
