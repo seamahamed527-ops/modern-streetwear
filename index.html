@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Fixed & Tested</title>
+    <title>Siyam Streetwear | Final Professional Version</title>
     <style>
         :root { --daraz-orange: #f85606; --bg: #eff0f5; }
         body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 110px; }
@@ -13,43 +13,34 @@
         header { padding: 10px 15px; }
         .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
         .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
-        .feature-bar { display: flex; justify-content: space-around; padding: 8px 0; font-size: 11px; background: #fff; border-top: 1px solid #eee; }
 
-        /* Page Display Logic */
+        /* Pages */
         .page { display: none; padding: 15px; box-sizing: border-box; }
         .active-page { display: block; }
 
-        /* Product Card Fix */
+        /* Product Grid */
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .card { background: #fff; border-radius: 8px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .p-img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
         .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        /* Payment UI Fix */
+        /* Payment UI */
         .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 15px; margin-bottom: 10px; cursor: pointer; background: #fff; }
-        .pay-card img { width: 40px; margin-right: 15px; }
-        .pay-card.selected { border: 2px solid var(--daraz-orange); background: #fff5f0; }
+        .pay-card img { width: 50px; height: 50px; object-fit: contain; margin-right: 15px; border-radius: 4px; }
 
-        /* Status Indicator (Light System) */
-        .status-badge { display: flex; align-items: center; font-size: 12px; margin-bottom: 5px; }
+        /* Light System */
         .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
         .red-light { background: #ff4d4d; box-shadow: 0 0 8px #ff4d4d; }
         .green-light { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
 
-        /* Account Header */
-        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; display: flex; align-items: center; }
-        .u-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #fff; cursor: pointer; object-fit: cover; }
-
-        /* Admin Sheet Layout */
+        /* Admin Sheet */
         #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .admin-btn { padding: 5px 8px; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 10px; }
 
-        /* Bottom Nav Fix */
+        /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
         .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; text-decoration: none; }
-        .nav-item.active { color: var(--daraz-orange); }
     </style>
 </head>
 <body onload="checkSystem()">
@@ -60,47 +51,44 @@
             <input type="text" id="pSearch" placeholder="Search in Siyam Streetwear" onkeyup="searchEngine()">
         </div>
     </header>
-    <div class="feature-bar">
-        <div>Eid Special</div><div>★ Free Shipping</div><div>7 Days Return</div>
-    </div>
 </div>
 
 <div id="homePage" class="page active-page">
     <h3 style="margin-top:0;">Just For You</h3>
-    <div class="product-grid" id="mainGrid">
-        <div class="card p-card" data-title="oversized t-shirt white premium">
-            <img src="30402.jpg" class="p-img">
-            <p style="font-size:13px; margin:8px 0;">Premium Oversized T-shirt - White</p>
+    <div class="product-grid">
+        <div class="card p-card" data-title="oversized t-shirt premium">
+            <img src="1772537055301.png" class="p-img" onerror="this.src='https://via.placeholder.com/150'">
+            <p style="font-size:13px; margin:8px 0;">Premium Oversized T-shirt</p>
             <b style="color:var(--daraz-orange);">৳ 400</b>
-            <button class="btn-buy" onclick="buyProcess('Premium White T-shirt', 400)">Buy Now</button>
+            <button class="btn-buy" onclick="buyProcess('Premium T-shirt', 400)">Buy Now</button>
         </div>
-        <div class="card p-card" data-title="anime t-shirt black hibiscus">
-            <img src="30401.jpg" class="p-img">
-            <p style="font-size:13px; margin:8px 0;">Anime Hibiscus T-shirt - Black</p>
+        <div class="card p-card" data-title="streetwear stylish t-shirt">
+            <img src="1772536906585.png" class="p-img" onerror="this.src='https://via.placeholder.com/150'">
+            <p style="font-size:13px; margin:8px 0;">Stylish Streetwear T-shirt</p>
             <b style="color:var(--daraz-orange);">৳ 400</b>
-            <button class="btn-buy" onclick="buyProcess('Anime Hibiscus T-shirt', 400)">Buy Now</button>
+            <button class="btn-buy" onclick="buyProcess('Stylish Streetwear', 400)">Buy Now</button>
         </div>
     </div>
 </div>
 
 <div id="checkPage" class="page">
     <h3 style="margin-top:0;">Payment Method</h3>
-    <div class="pay-card" onclick="selectMethod('bKash')"><img src="https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg"> bKash (01956273611)</div>
-    <div class="pay-card" onclick="selectMethod('Nagad')"><img src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png"> Nagad (01956273611)</div>
-    <div class="pay-card" onclick="selectMethod('Rocket')"><img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png"> Rocket (01956273611)</div>
+    <div class="pay-card" onclick="selectMethod('bKash')"><img src="1772537135821.png"> bKash (01956273611)</div>
+    <div class="pay-card" onclick="selectMethod('Nagad')"><img src="1772537369194.png"> Nagad (01956273611)</div>
+    <div class="pay-card" onclick="selectMethod('Debit Card')"><img src="1772537449513.png"> Debit Card / IFIC Bank</div>
     
     <div id="confirmBox" style="display:none; margin-top:20px;">
         <div class="card" style="border: 1px solid var(--daraz-orange);">
             <p id="payGuide" style="font-size:13px;"></p>
-            <input type="text" id="trxInput" placeholder="Enter Transaction ID (TrxID)" style="width:100%; padding:12px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
+            <input type="text" id="trxInput" placeholder="Enter TrxID / Card Digits" style="width:100%; padding:12px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
             <button class="btn-buy" onclick="submitFinalOrder()">CONFIRM ORDER</button>
         </div>
     </div>
 </div>
 
 <div id="accPage" class="page" style="padding:0;">
-    <div class="profile-header">
-        <img id="uPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="u-img" onclick="updatePhoto()">
+    <div style="background:var(--daraz-orange); color:white; padding:30px 20px; display:flex; align-items:center;">
+        <img id="uPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width:60px; height:60px; border-radius:50%; border:2px solid #fff;">
         <div style="margin-left:15px;">
             <h3 style="margin:0;" id="uNameDisp" onclick="updateName()">Siyam Ahamed ✎</h3>
             <small>Verified Member</small>
@@ -108,13 +96,12 @@
     </div>
     <div style="padding:15px;">
         <div class="card" style="display:flex; justify-content:space-around; text-align:center; font-size:11px;">
-            <div>📦<br>To Pay</div>
             <div onclick="loadMyOrders()">🚚<br>To Ship</div>
             <div onclick="loadMyOrders()">✅<br>Received</div>
             <div onclick="adminDoor()">🧬<br>My Affiliates</div>
         </div>
-        <h4>My Order Tracking</h4>
-        <div id="myOrdersDisplay">কোনো অর্ডার পাওয়া যায়নি।</div>
+        <h4>Order Tracking</h4>
+        <div id="myOrdersDisplay">অর্ডার নেই।</div>
     </div>
 </div>
 
@@ -130,7 +117,7 @@
 </div>
 
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchPage('homePage')">🏠<br>Home</div>
+    <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
     <div class="nav-item" onclick="window.location.href='https://wa.me/8801410273611'">💬<br>Messages</div>
     <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
 </div>
@@ -138,7 +125,6 @@
 <script>
     let currentItem = ""; let currentPrice = 0; let currentMethod = "";
 
-    // ১. পেজ সুইচ লজিক (মাথা ঠিক রেখে)
     function switchPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
@@ -146,7 +132,6 @@
         if(id === 'accPage') loadMyOrders();
     }
 
-    // ২. পেমেন্ট ও অর্ডার প্রসেস (চেক করা)
     function buyProcess(name, price) {
         currentItem = name; currentPrice = price;
         switchPage('checkPage');
@@ -155,79 +140,67 @@
     function selectMethod(m) {
         currentMethod = m;
         document.getElementById('confirmBox').style.display = 'block';
-        document.getElementById('payGuide').innerHTML = `আপনার <b>${m}</b> থেকে <b>01956273611</b> নাম্বারে ৳${currentPrice} Send Money করুন এবং নিচের বক্সে TrxID দিন।`;
+        if(m === 'Debit Card') {
+            document.getElementById('payGuide').innerHTML = `<b>IFIC Bank Details:</b><br>Name: SIYAM AHAMED ANTOR<br>A/C: 0190117377811<br>টাকা পাঠিয়ে কার্ডের শেষ ৪ ডিজিট দিন।`;
+        } else {
+            document.getElementById('payGuide').innerHTML = `আপনার <b>${m}</b> থেকে <b>01956273611</b> নাম্বারে ৳${currentPrice} Send Money করুন এবং TrxID দিন।`;
+        }
     }
 
     function submitFinalOrder() {
         let trx = document.getElementById('trxInput').value;
-        if(trx.length < 4) return alert("সঠিক TrxID দিন!");
-
-        let orders = JSON.parse(localStorage.getItem("siyam_db") || "[]");
-        orders.push({
-            id: Date.now(),
-            name: localStorage.getItem("u_name") || "Siyam",
-            product: currentItem,
-            trx: trx,
-            method: currentMethod,
-            status: "To Ship" // ডিফল্ট লাল বাতি
-        });
-        localStorage.setItem("siyam_db", JSON.stringify(orders));
-        alert("অর্ডার সফল হয়েছে!");
-        window.location.href = "https://wa.me/8801410273611?text=Order: " + currentItem + " | TrxID: " + trx;
+        if(trx.length < 4) return alert("সঠিক তথ্য দিন!");
+        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
+        orders.push({ id: Date.now(), name: localStorage.getItem("u_name") || "User", product: currentItem, trx: trx, status: "To Ship" });
+        localStorage.setItem("s_db_final", JSON.stringify(orders));
+        alert("অর্ডার সফল!");
+        window.location.href = "https://wa.me/8801410273611?text=Order: " + currentItem + " | Trx: " + trx;
     }
 
-    // ৩. বাতি সিস্টেম (লাল/সবুজ)
     function loadMyOrders() {
-        let orders = JSON.parse(localStorage.getItem("siyam_db") || "[]");
+        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
         let display = document.getElementById("myOrdersDisplay");
-        if(orders.length === 0) { display.innerHTML = "অর্ডার নেই।"; return; }
-
         display.innerHTML = orders.map(o => `
-            <div class="card" style="margin-bottom:8px; border-left: 5px solid ${o.status==='Received'?'#2ecc71':'#ff4d4d'}">
-                <div class="status-badge">
-                    <span class="dot ${o.status==='Received'?'green-light':'red-light'}"></span>
-                    <b>${o.status}</b>
-                </div>
-                <div style="font-size:12px;">Item: ${o.product} <br> TrxID: ${o.trx}</div>
+            <div class="card" style="border-left: 5px solid ${o.status==='Received'?'#2ecc71':'#ff4d4d'}">
+                <span class="dot ${o.status==='Received'?'green-light':'red-light'}"></span>
+                <b>${o.status}</b> | ${o.product}<br><small>Trx: ${o.trx}</small>
             </div>
-        `).reverse().join('');
+        `).reverse().join('') || "অর্ডার নেই।";
     }
 
-    // ৪. অ্যাডমিন (পাসওয়ার্ড ও ডিলিট/এডিট)
     function adminDoor() {
         if(prompt("Admin Password:") === "2314") {
             document.getElementById("adminPanel").style.display = "block";
             refreshAdmin();
-        } else { alert("Wrong Password!"); }
+        }
     }
 
     function refreshAdmin() {
-        let orders = JSON.parse(localStorage.getItem("siyam_db") || "[]");
+        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
         document.getElementById("adminTBody").innerHTML = orders.map((o, index) => `
             <tr>
                 <td>${o.name}</td><td>${o.product}</td><td>${o.trx}</td>
-                <td><button class="admin-btn" style="background:orange" onclick="toggleStatus(${o.id})">Change</button></td>
-                <td><button class="admin-btn" style="background:red" onclick="deleteOrder(${index})">Del</button></td>
+                <td><button onclick="toggleS(${o.id})">Status</button></td>
+                <td><button style="color:red" onclick="delO(${index})">Del</button></td>
             </tr>
         `).reverse().join('');
     }
 
-    function toggleStatus(id) {
-        let orders = JSON.parse(localStorage.getItem("siyam_db") || "[]");
+    function toggleS(id) {
+        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
         let o = orders.find(x => x.id === id);
         o.status = (o.status === "To Ship") ? "Received" : "To Ship";
-        localStorage.setItem("siyam_db", JSON.stringify(orders));
+        localStorage.setItem("s_db_final", JSON.stringify(orders));
         refreshAdmin(); loadMyOrders();
     }
 
-    function deleteOrder(index) {
-        let orders = JSON.parse(localStorage.getItem("siyam_db") || "[]");
+    function delO(index) {
+        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
         orders.splice(orders.length - 1 - index, 1);
-        localStorage.setItem("siyam_db", JSON.stringify(orders));
+        localStorage.setItem("s_db_final", JSON.stringify(orders));
         refreshAdmin(); loadMyOrders();
     }
 
-    // ৫. সার্চ এবং প্রোফাইল
     function searchEngine() {
         let q = document.getElementById("pSearch").value.toLowerCase();
         document.querySelectorAll(".p-card").forEach(c => {
@@ -238,19 +211,12 @@
     function checkSystem() {
         let n = localStorage.getItem("u_name") || "Siyam Ahamed";
         document.getElementById("uNameDisp").innerText = n + " ✎";
-        if(localStorage.getItem("u_img")) document.getElementById("uPhoto").src = localStorage.getItem("u_img");
     }
 
     function updateName() {
         let n = prompt("Change Name:");
         if(n) { localStorage.setItem("u_name", n); checkSystem(); }
     }
-
-    function updatePhoto() {
-        let url = prompt("Enter Image URL (or use file input logic):");
-        if(url) { localStorage.setItem("u_img", url); checkSystem(); }
-    }
 </script>
-
 </body>
 </html>
