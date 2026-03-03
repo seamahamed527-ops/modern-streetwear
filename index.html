@@ -3,54 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Ultimate Daraz Replica</title>
+    <title>Siyam Streetwear | Fixed Pro</title>
     <style>
-        :root { --daraz-orange: #f85606; --light-gray: #eff0f5; }
-        body { font-family: 'Roboto', sans-serif; background: var(--light-gray); margin: 0; padding-bottom: 65px; padding-top: 110px; }
+        :root { --daraz-orange: #f85606; --bg: #eff0f5; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 65px; padding-top: 110px; }
         
-        /* Fixed Headers */
-        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; }
-        header { background: #fff; padding: 10px 15px; border-bottom: 1px solid #ddd; }
+        /* Fixed Header Section */
+        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; }
+        header { padding: 10px 15px; border-bottom: 1px solid #ddd; }
         .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
         .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
-        .feature-bar { background: #fff; display: flex; justify-content: space-around; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 11px; }
+        .feature-bar { display: flex; justify-content: space-around; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 11px; background: #fff; }
 
-        /* General Styles */
+        /* General Page Logic */
         .page { display: none; padding: 15px; box-sizing: border-box; }
         .active-page { display: block; }
         .card { background: #fff; border-radius: 4px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 10px; }
 
-        /* Product Grid (Daraz "For You") */
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .p-card img { width: 100%; height: 180px; object-fit: cover; }
-        .p-price { color: var(--daraz-orange); font-size: 16px; font-weight: bold; margin: 5px 0; }
-        .btn-cart { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 8px; border-radius: 2px; cursor: pointer; }
+        /* Product Card Style */
+        .p-card img { width: 100%; height: auto; border-radius: 4px; }
+        .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        /* Payment Option */
-        .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 15px; margin-bottom: 10px; cursor: pointer; }
-        .pay-card:hover { border-color: var(--daraz-orange); background: #fff5f0; }
-        .pay-card img { width: 45px; margin-right: 15px; }
+        /* Payment Method Cards */
+        .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 15px; margin-bottom: 10px; cursor: pointer; background: #fff; }
+        .pay-card img { width: 40px; margin-right: 15px; }
 
-        /* Account & Profile Edit */
-        .profile-header { background: var(--daraz-orange); color: white; padding: 25px; display: flex; align-items: center; justify-content: space-between; }
-        .p-img-box { position: relative; width: 60px; height: 60px; }
-        #uImgDisplay { width: 100%; height: 100%; border-radius: 50%; border: 2px solid white; object-fit: cover; }
-        .edit-icon { position: absolute; bottom: -5px; right: -5px; background: white; border-radius: 50%; padding: 2px; font-size: 12px; color: #333; cursor: pointer; }
-        
-        .order-status { display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px; background: white; border-bottom: 1px solid #eee; text-align: center; }
-        .status-item { color: #666; font-size: 11px; }
+        /* Account & Status Indicator */
+        .profile-header { background: var(--daraz-orange); color: white; padding: 25px; display: flex; align-items: center; }
+        .p-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
+        .status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .dot-red { background-color: #ff4d4d; box-shadow: 0 0 5px #ff4d4d; }
+        .dot-green { background-color: #2ecc71; box-shadow: 0 0 5px #2ecc71; }
 
-        /* Order List Buttons */
-        .status-btn { padding: 5px 10px; border: none; border-radius: 4px; color: white; cursor: pointer; margin-right: 5px; }
-        .btn-green { background: #28a745; }
-        .btn-red { background: #dc3545; }
-
-        /* Full Screen Admin/G-Sheet */
-        #adminDashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; overflow-y: auto; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 20px; }
+        /* Admin Sheet Layout */
+        #adminSheet { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #2874f0; color: white; }
-        .btn-del { background: #dc3545; color: white; border: none; padding: 3px 6px; border-radius: 2px; cursor: pointer; }
+        .btn-admin { padding: 5px; cursor: pointer; border-radius: 3px; border: none; color: #fff; font-size: 10px; }
 
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
@@ -58,155 +47,179 @@
         .nav-item.active { color: var(--daraz-orange); }
     </style>
 </head>
-<body onload="initReplica()">
+<body onload="checkUser()">
 
-<div class="top-fixed">
-    <header id="appHeader">
+<div class="top-fixed" id="headerGroup">
+    <header>
         <div class="search-container">
             <span>🔍</span>
-            <input type="text" id="searchInput" placeholder="Search in Daraz" onkeyup="darazSearch()">
+            <input type="text" id="darazSearch" placeholder="Search in Daraz" onkeyup="filterProducts()">
         </div>
     </header>
-    <div class="feature-bar" id="appFeatureBar">
-        <div>Eid Sale</div>
-        <div>Fast Delivery</div>
-        <div>Free Return</div>
+    <div class="feature-bar">
+        <div>Eid Sale</div><div>Fast Delivery</div><div>Free Return</div>
     </div>
 </div>
 
 <div id="home" class="page active-page">
-    <h3>Just For You</h3>
-    <div class="product-grid">
-        <div class="p-card card" data-name="oversized t-shirt white premium">
-            <img src="1772537055301.png">
-            <div class="p-info">
-                <p>Premium Oversized T-shirt</p>
-                <p class="p-price">৳ 400</p>
-                <button class="btn-cart" onclick="placeOrder('Oversized T-shirt', 400)">Add to Cart</button>
-            </div>
+    <h3 style="margin-top:0;">Just For You</h3>
+    <div id="productGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="card p-card" data-name="premium oversized t-shirt white">
+            <img src="30402.jpg">
+            <p style="font-size:13px; margin:5px 0;">Premium Oversized T-shirt - White</p>
+            <b style="color:var(--daraz-orange);">৳ 400</b>
+            <button class="btn-buy" onclick="openCheckout('Oversized T-shirt', 400)">Buy Now</button>
         </div>
     </div>
 </div>
 
 <div id="checkout" class="page">
     <h3>Select Payment Method</h3>
-    <div class="pay-card" onclick="setPay('bKash')"><img src="https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg"> bKash (01956273611)</div>
-    <div class="pay-card" onclick="setPay('Nagad')"><img src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png"> Nagad (01956273611)</div>
+    <div class="pay-card" onclick="startPay('bKash')"><img src="https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg"> bKash (01956273611)</div>
+    <div class="pay-card" onclick="startPay('Nagad')"><img src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png"> Nagad (01956273611)</div>
+    <div class="pay-card" onclick="startPay('Rocket')"><img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png"> Rocket (01956273611)</div>
     
-    <div class="pay-card" onclick="setPay('Rocket')">
-        <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png">
-        <b>Rocket (01956273611)</b>
+    <div id="payAction" style="display:none; margin-top:20px;">
+        <div class="card">
+            <p id="payInstructions"></p>
+            <input type="text" id="trxInput" placeholder="Enter Transaction ID" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; box-sizing:border-box;">
+            <button class="btn-buy" onclick="finalSubmit()">Confirm Order</button>
+        </div>
     </div>
-    
-    <div class="pay-card" onclick="setPay('Bank')"><img src="https://cdn-icons-png.flaticon.com/512/633/633611.png"> IFIC Bank Transfer</div>
 </div>
 
 <div id="account" class="page" style="padding:0;">
     <div class="profile-header">
-        <div style="display:flex; align-items:center;">
-            <div class="p-img-box">
-                <img id="uImgDisplay" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-                <label for="uImgInput" class="edit-icon">✎</label>
-                <input type="file" id="uImgInput" accept="image/*" style="display:none;" onchange="changeProfileImg(this)">
-            </div>
-            <div style="margin-left:15px;">
-                <h3 id="uNameDisplay" style="margin:0;">User Name <span onclick="changeProfileName()" style="cursor:pointer; font-size:12px;">✎</span></h3>
-                <small>Verified Member</small>
-            </div>
+        <img id="userImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="p-img" onclick="editPhoto()">
+        <div style="margin-left:15px;">
+            <h3 style="margin:0;" onclick="editName()"><span id="userNameDisp">User</span> ✎</h3>
+            <small>Verified Customer</small>
         </div>
     </div>
-
-    <div class="order-status">
-        <div class="status-item">To Pay</div>
-        <div class="status-item">To Ship</div>
-        <div class="status-item" onclick="showSectionOrders('To Receive')">To Receive</div>
-        <div class="status-item">Reviews</div>
-    </div>
-
-    <div style="background:white; margin-top:10px; padding:15px;">
-        <h3>My Orders</h3>
-        <div id="userOrderList">কোনো অর্ডার নেই।</div>
-    </div>
-
-    <div style="padding: 20px; text-align:center;">
-        <span onclick="openAdmin()" style="cursor:pointer; color:#ccc;">My Affiliates</span>
+    <div style="padding:15px;">
+        <div class="card" style="display:flex; justify-content:space-around; text-align:center; font-size:11px;">
+            <div onclick="filterMyOrders('To Pay')">📦<br>To Pay</div>
+            <div onclick="filterMyOrders('To Ship')">🚚<br>To Ship</div>
+            <div onclick="filterMyOrders('Received')">✅<br>Received</div>
+            <div onclick="adminLogin()">🧬<br>My Affiliates</div>
+        </div>
+        <h4>Order History</h4>
+        <div id="myOrdersList">অর্ডার নেই।</div>
     </div>
 </div>
 
-<div id="adminDashboard">
-    <button onclick="closeAdmin()" style="float:right;">X</button>
-    <h2>Admin Order Sheet</h2>
+<div id="adminSheet">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Order Database</h2>
+        <button onclick="document.getElementById('adminSheet').style.display='none'">Close</button>
+    </div>
     <table>
-        <thead>
-            <tr><th>Cust</th><th>Item</th><th>TrxID</th><th>Status</th><th>Action</th></tr>
-        </thead>
-        <tbody id="adminTableBody"></tbody>
+        <thead><tr><th>Customer</th><th>Product</th><th>TrxID</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="adminBody"></tbody>
     </table>
 </div>
 
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="navPage('home')">🏠<br>Home</div>
-    <div class="nav-item" onclick="window.location.href='https://wa.me/8801956273611'">💬<br>Messages</div>
-    <div class="nav-item" onclick="navPage('checkout')">🛒<br>Cart</div>
-    <div class="nav-item" onclick="navPage('account')">👤<br>Account</div>
+    <div class="nav-item active" onclick="showPage('home')">🏠<br>Home</div>
+    <div class="nav-item" onclick="window.location.href='https://wa.me/8801410273611'">💬<br>Messages</div>
+    <div class="nav-item" onclick="showPage('account')">👤<br>Account</div>
 </div>
 
 <script>
-    let currentItem = {};
+    let tempItem = ""; let tempPrice = 0; let selectedMethod = "";
 
-    function initReplica() {
-        localStorage.getItem("s_uname") ? document.getElementById("uNameDisplay").innerHTML = localStorage.getItem("s_uname") + ` <span onclick="changeProfileName()" style="cursor:pointer; font-size:12px;">✎</span>` : null;
-        localStorage.getItem("s_uimg") ? document.getElementById("uImgDisplay").src = localStorage.getItem("s_uimg") : null;
-        updateUserOrderList();
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
+        document.getElementById('headerGroup').style.display = (id === 'account') ? 'none' : 'block';
     }
 
-    // ১. দারাজ স্টাইল সার্চ
-    function darazSearch() {
-        let q = document.getElementById("searchInput").value.toLowerCase();
+    function checkUser() {
+        document.getElementById("userNameDisp").innerText = localStorage.getItem("s_name") || "Seam Ahamed";
+        if(localStorage.getItem("s_img")) document.getElementById("userImg").src = localStorage.getItem("s_img");
+        loadMyOrders();
+    }
+
+    // পেমেন্ট ও কার্ড লজিক (ফিক্সড)
+    function openCheckout(item, price) { tempItem = item; tempPrice = price; showPage('checkout'); }
+    function startPay(m) {
+        selectedMethod = m; document.getElementById('payAction').style.display = 'block';
+        document.getElementById('payInstructions').innerHTML = `Please send ৳${tempPrice} to <b>01956273611</b> via ${m} and enter TrxID below.`;
+    }
+
+    function finalSubmit() {
+        let trx = document.getElementById('trxInput').value;
+        if(!trx) return alert("TrxID দিন!");
+        let orders = JSON.parse(localStorage.getItem("db_orders") || "[]");
+        orders.push({
+            id: Date.now(),
+            user: document.getElementById("userNameDisp").innerText,
+            item: tempItem,
+            trx: trx,
+            status: "To Ship", // ডিফল্ট স্ট্যাটাস
+            method: selectedMethod
+        });
+        localStorage.setItem("db_orders", JSON.stringify(orders));
+        alert("অর্ডার সফল! হোয়াটসঅ্যাপে মেসেজ দিন।");
+        window.location.href = "https://wa.me/8801410273611?text=Order: "+tempItem+" | Trx: "+trx;
+    }
+
+    // বাতি সিস্টেম (লাল/সবুজ)
+    function loadMyOrders() {
+        let orders = JSON.parse(localStorage.getItem("db_orders") || "[]");
+        let list = document.getElementById("myOrdersList");
+        list.innerHTML = orders.map(o => `
+            <div class="card" style="font-size:12px;">
+                <span class="status-dot ${o.status === 'Received' ? 'dot-green' : 'dot-red'}"></span>
+                <b>${o.item}</b> - ${o.status}<br>
+                <small>TrxID: ${o.trx}</small>
+            </div>
+        `).reverse().join('') || "অর্ডার নেই।";
+    }
+
+    // অ্যাডমিন প্যানেল (ডিলিট ও আপডেট)
+    function adminLogin() {
+        if(prompt("গোপন পাসওয়ার্ড দিন:") === "2314") {
+            document.getElementById('adminSheet').style.display = 'block';
+            refreshAdmin();
+        }
+    }
+
+    function refreshAdmin() {
+        let orders = JSON.parse(localStorage.getItem("db_orders") || "[]");
+        document.getElementById("adminBody").innerHTML = orders.map((o, index) => `
+            <tr>
+                <td>${o.user}</td><td>${o.item}</td><td>${o.trx}</td>
+                <td><button onclick="updateStatus(${o.id})" class="btn-admin" style="background:orange">Change</button></td>
+                <td><button onclick="delOrder(${index})" class="btn-admin" style="background:red">Delete</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function updateStatus(id) {
+        let orders = JSON.parse(localStorage.getItem("db_orders") || "[]");
+        let o = orders.find(x => x.id === id);
+        o.status = (o.status === "To Ship") ? "Received" : "To Ship";
+        localStorage.setItem("db_orders", JSON.stringify(orders));
+        refreshAdmin(); loadMyOrders();
+    }
+
+    function delOrder(i) {
+        let orders = JSON.parse(localStorage.getItem("db_orders") || "[]");
+        orders.splice(i, 1);
+        localStorage.setItem("db_orders", JSON.stringify(orders));
+        refreshAdmin(); loadMyOrders();
+    }
+
+    function filterProducts() {
+        let q = document.getElementById("darazSearch").value.toLowerCase();
         document.querySelectorAll(".p-card").forEach(c => {
             c.style.display = c.getAttribute("data-name").includes(q) ? "block" : "none";
         });
     }
 
-    // ৩. প্রোফাইল এডিট (নাম ও ছবি)
-    function changeProfileName() {
-        let n = prompt("নতুন নাম লিখুন:");
-        if(n) { localStorage.setItem("s_uname", n); initReplica(); }
-    }
-    function changeProfileImg(input) {
-        if (input.files && input.files[0]) {
-            let reader = new FileReader();
-            reader.onload = function(e) { localStorage.setItem("s_uimg", e.target.result); initReplica(); }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function navPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(id).classList.add('active-page');
-        document.getElementById('appHeader').style.display = (id === 'account') ? 'none' : 'block';
-        document.getElementById('appFeatureBar').style.display = (id === 'account') ? 'none' : 'flex';
-        document.getElementById('topHeader').style.display = (id === 'account') ? 'none' : 'flex'; // image_11.png headers logic
-    }
-
-    function updateUserOrderList() {
-        let o = JSON.parse(localStorage.getItem("d_replica_orders") || "[]");
-        let u = localStorage.getItem("s_uname") || "Guest";
-        let my = o.filter(x => x.cust === u);
-        
-        if(my.length > 0) {
-            document.getElementById("userOrderList").innerHTML = my.map(x => `
-                <div class="card" style="font-size:12px;">
-                    <b>${x.item}</b> (${x.price}) | ${x.method}<br>
-                    TrxID: ${x.trx}<br>
-                    Status: <span id="uStatus-${x.id}">${x.status}</span>
-                </div>
-            `).reverse().join('');
-        }
-    }
-
-    function closeAdmin() { document.getElementById("adminDashboard").style.display = "none"; }
+    function editName() { let n = prompt("নাম পরিবর্তন করুন:"); if(n) { localStorage.setItem("s_name", n); checkUser(); } }
+    function editPhoto() { alert("Photo change logic updated - Use Profile Edit."); }
 </script>
-
 </body>
 </html>
