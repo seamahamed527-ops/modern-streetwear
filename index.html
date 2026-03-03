@@ -3,69 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Final Professional Version</title>
+    <title>Siyam Streetwear | Wallet & Slider Version</title>
     <style>
         :root { --daraz-orange: #f85606; --bg: #eff0f5; }
-        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 110px; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 100px; }
         
-        /* Header Fix */
-        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; }
-        header { padding: 10px 15px; }
-        .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
+        /* Header */
+        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; }
+        .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; margin: 0 15px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
         .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
+
+        /* Slider Logic */
+        .slider-container { width: 100%; overflow-x: auto; display: flex; scroll-snap-type: x mandatory; scroll-behavior: smooth; border-radius: 8px; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slide-img { min-width: 100%; height: 200px; object-fit: cover; scroll-snap-align: start; }
+        .swipe-hint { font-size: 10px; color: #777; text-align: right; margin-top: 5px; }
 
         /* Pages */
         .page { display: none; padding: 15px; box-sizing: border-box; }
         .active-page { display: block; }
 
-        /* Product Grid */
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .card { background: #fff; border-radius: 8px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .p-img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
+        /* Product Card */
+        .product-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .card { background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
         /* Payment UI */
-        .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 15px; margin-bottom: 10px; cursor: pointer; background: #fff; }
-        .pay-card img { width: 50px; height: 50px; object-fit: contain; margin-right: 15px; border-radius: 4px; }
+        .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 12px; margin-bottom: 10px; cursor: pointer; background: #fff; }
+        .pay-card img { width: 35px; height: 35px; margin-right: 15px; object-fit: contain; }
 
-        /* Light System */
-        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
-        .red-light { background: #ff4d4d; box-shadow: 0 0 8px #ff4d4d; }
-        .green-light { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
+        /* Account & Wallet */
+        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; text-align: center; }
+        .u-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; margin-bottom: 10px; cursor: pointer; }
+        .wallet-box { background: #fff; margin: -20px 20px 10px 20px; border-radius: 8px; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
 
-        /* Admin Sheet */
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        /* Admin Dashboard */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
-        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; text-decoration: none; }
+        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
     </style>
 </head>
-<body onload="checkSystem()">
+<body onload="initSystem()">
 
 <div class="top-fixed" id="navHeader">
-    <header>
-        <div class="search-container">
-            <input type="text" id="pSearch" placeholder="Search in Siyam Streetwear" onkeyup="searchEngine()">
-        </div>
-    </header>
+    <div class="search-container">
+        <input type="text" id="pSearch" placeholder="Search in Siyam Streetwear" onkeyup="searchEngine()">
+    </div>
 </div>
 
 <div id="homePage" class="page active-page">
     <h3 style="margin-top:0;">Just For You</h3>
     <div class="product-grid">
-        <div class="card p-card" data-title="oversized t-shirt premium">
-            <img src="1772537055301.png" class="p-img" onerror="this.src='https://via.placeholder.com/150'">
-            <p style="font-size:13px; margin:8px 0;">Premium Oversized T-shirt</p>
-            <b style="color:var(--daraz-orange);">৳ 400</b>
+        <div class="card p-card" data-title="premium oversized t-shirt">
+            <div class="slider-container">
+                <img src="1772537055301.png" class="slide-img">
+                <img src="1772536906585.png" class="slide-img">
+                <img src="1772537055301.png" class="slide-img">
+            </div>
+            <div class="swipe-hint">ডানদিক থেকে টান দিন (Swipe) ➔</div>
+            <p style="font-size:15px; margin:10px 0; font-weight:bold;">Premium Oversized T-shirt</p>
+            <b style="color:var(--daraz-orange); font-size:18px;">৳ 400</b>
             <button class="btn-buy" onclick="buyProcess('Premium T-shirt', 400)">Buy Now</button>
         </div>
-        <div class="card p-card" data-title="streetwear stylish t-shirt">
-            <img src="1772536906585.png" class="p-img" onerror="this.src='https://via.placeholder.com/150'">
-            <p style="font-size:13px; margin:8px 0;">Stylish Streetwear T-shirt</p>
-            <b style="color:var(--daraz-orange);">৳ 400</b>
+
+        <div class="card p-card" data-title="stylish streetwear t-shirt">
+            <div class="slider-container">
+                <img src="1772536906585.png" class="slide-img">
+                <img src="1772537055301.png" class="slide-img">
+                <img src="1772536906585.png" class="slide-img">
+            </div>
+            <div class="swipe-hint">ডানদিক থেকে টান দিন (Swipe) ➔</div>
+            <p style="font-size:15px; margin:10px 0; font-weight:bold;">Stylish Streetwear T-shirt</p>
+            <b style="color:var(--daraz-orange); font-size:18px;">৳ 400</b>
             <button class="btn-buy" onclick="buyProcess('Stylish Streetwear', 400)">Buy Now</button>
         </div>
     </div>
@@ -73,45 +86,72 @@
 
 <div id="checkPage" class="page">
     <h3 style="margin-top:0;">Payment Method</h3>
-    <div class="pay-card" onclick="selectMethod('bKash')"><img src="1772537135821.png"> bKash (01956273611)</div>
-    <div class="pay-card" onclick="selectMethod('Nagad')"><img src="1772537369194.png"> Nagad (01956273611)</div>
-    <div class="pay-card" onclick="selectMethod('Debit Card')"><img src="1772537449513.png"> Debit Card / IFIC Bank</div>
+    <div class="pay-card" onclick="selectMethod('Wallet Balance')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331711.png"> Use Wallet Balance (৳<span id="payWallet">0</span>)
+    </div>
+    <div class="pay-card" onclick="selectMethod('bKash')">
+        <img src="1772537135821.png"> bKash (01956273611)
+    </div>
+    <div class="pay-card" onclick="selectMethod('Nagad')">
+        <img src="1772537369194.png"> Nagad (01956273611)
+    </div>
+    <div class="pay-card" onclick="selectMethod('Rocket')">
+        <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png"> Rocket (01956273611)
+    </div>
+    <div class="pay-card" onclick="selectMethod('Bank Transfer')">
+        <img src="1772537449513.png"> IFIC Bank Transfer
+    </div>
     
     <div id="confirmBox" style="display:none; margin-top:20px;">
-        <div class="card" style="border: 1px solid var(--daraz-orange);">
+        <div class="card" style="border: 2px solid var(--daraz-orange);">
             <p id="payGuide" style="font-size:13px;"></p>
-            <input type="text" id="trxInput" placeholder="Enter TrxID / Card Digits" style="width:100%; padding:12px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
+            <input type="text" id="trxInput" placeholder="Enter Transaction ID / Reference" style="width:100%; padding:12px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box;">
             <button class="btn-buy" onclick="submitFinalOrder()">CONFIRM ORDER</button>
         </div>
     </div>
 </div>
 
 <div id="accPage" class="page" style="padding:0;">
-    <div style="background:var(--daraz-orange); color:white; padding:30px 20px; display:flex; align-items:center;">
-        <img id="uPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width:60px; height:60px; border-radius:50%; border:2px solid #fff;">
-        <div style="margin-left:15px;">
-            <h3 style="margin:0;" id="uNameDisp" onclick="updateName()">Siyam Ahamed ✎</h3>
-            <small>Verified Member</small>
-        </div>
+    <div class="profile-header">
+        <input type="file" id="fileInput" style="display:none" accept="image/*" onchange="uploadPhoto(event)">
+        <img id="uPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="u-img" onclick="document.getElementById('fileInput').click()">
+        <h3 id="uNameDisp" onclick="updateName()" style="margin:5px 0;">Siyam Ahamed ✎</h3>
+        <small>Verified Streetwear Fan</small>
     </div>
+
+    <div class="wallet-box">
+        <div>
+            <small style="color:#777">My Balance</small><br>
+            <b style="font-size:20px; color:var(--daraz-orange);">৳ <span id="uBalance">0</span></b>
+        </div>
+        <button onclick="alert('ব্যালেন্স অ্যাড করতে অ্যাডমিনের সাথে যোগাযোগ করুন।')" style="padding:8px 15px; border:1px solid var(--daraz-orange); background:none; border-radius:20px; color:var(--daraz-orange); font-size:12px;">Add Money</button>
+    </div>
+
     <div style="padding:15px;">
         <div class="card" style="display:flex; justify-content:space-around; text-align:center; font-size:11px;">
             <div onclick="loadMyOrders()">🚚<br>To Ship</div>
             <div onclick="loadMyOrders()">✅<br>Received</div>
-            <div onclick="adminDoor()">🧬<br>My Affiliates</div>
+            <div onclick="adminDoor()">🧬<br>Admin Dashboard</div>
         </div>
-        <h4>Order Tracking</h4>
-        <div id="myOrdersDisplay">অর্ডার নেই।</div>
+        <h4 style="margin-top:20px;">Order History</h4>
+        <div id="myOrdersDisplay">অর্ডার হিস্ট্রি খালি।</div>
     </div>
 </div>
 
 <div id="adminPanel">
     <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3>Admin Dashboard</h3>
-        <button onclick="document.getElementById('adminPanel').style.display='none'">X</button>
+        <h3>Admin Controls</h3>
+        <button onclick="document.getElementById('adminPanel').style.display='none'">Close</button>
     </div>
+    
+    <div class="card" style="margin-bottom:15px; background:#f9f9f9;">
+        <p><b>ইউজার ব্যালেন্স সেট করুন</b></p>
+        <input type="number" id="newBal" placeholder="কত টাকা দিতে চান?" style="width:70%; padding:8px;">
+        <button onclick="setBalance()" style="padding:8px;">Set</button>
+    </div>
+
     <table>
-        <thead><tr><th>Customer</th><th>Product</th><th>TrxID</th><th>Status</th><th>Action</th></tr></thead>
+        <thead><tr><th>Customer</th><th>Product</th><th>Status</th><th>TrxID</th><th>Action</th></tr></thead>
         <tbody id="adminTBody"></tbody>
     </table>
 </div>
@@ -124,6 +164,15 @@
 
 <script>
     let currentItem = ""; let currentPrice = 0; let currentMethod = "";
+    let walletBalance = parseInt(localStorage.getItem("s_wallet") || "0");
+
+    function initSystem() {
+        document.getElementById("uBalance").innerText = walletBalance;
+        document.getElementById("payWallet").innerText = walletBalance;
+        let n = localStorage.getItem("u_name") || "Siyam Ahamed";
+        document.getElementById("uNameDisp").innerText = n + " ✎";
+        if(localStorage.getItem("u_img")) document.getElementById("uPhoto").src = localStorage.getItem("u_img");
+    }
 
     function switchPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
@@ -140,32 +189,57 @@
     function selectMethod(m) {
         currentMethod = m;
         document.getElementById('confirmBox').style.display = 'block';
-        if(m === 'Debit Card') {
-            document.getElementById('payGuide').innerHTML = `<b>IFIC Bank Details:</b><br>Name: SIYAM AHAMED ANTOR<br>A/C: 0190117377811<br>টাকা পাঠিয়ে কার্ডের শেষ ৪ ডিজিট দিন।`;
+        if(m === 'Wallet Balance') {
+            document.getElementById('payGuide').innerHTML = `আপনার বর্তমান ওয়ালেট ব্যালেন্স ৳${walletBalance}। এখান থেকে ৳${currentPrice} কেটে নেওয়া হবে।`;
+            document.getElementById('trxInput').value = "WALLET_PAY";
+            document.getElementById('trxInput').readOnly = true;
         } else {
-            document.getElementById('payGuide').innerHTML = `আপনার <b>${m}</b> থেকে <b>01956273611</b> নাম্বারে ৳${currentPrice} Send Money করুন এবং TrxID দিন।`;
+            document.getElementById('payGuide').innerHTML = `আপনার <b>${m}</b> থেকে <b>01956273611</b> নাম্বারে ৳${currentPrice} পাঠিয়ে TrxID দিন।`;
+            document.getElementById('trxInput').value = "";
+            document.getElementById('trxInput').readOnly = false;
         }
     }
 
     function submitFinalOrder() {
+        if(currentMethod === 'Wallet Balance' && walletBalance < currentPrice) {
+            return alert("আপনার ওয়ালেটে পর্যাপ্ত ব্যালেন্স নেই!");
+        }
+
         let trx = document.getElementById('trxInput').value;
-        if(trx.length < 4) return alert("সঠিক তথ্য দিন!");
-        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
-        orders.push({ id: Date.now(), name: localStorage.getItem("u_name") || "User", product: currentItem, trx: trx, status: "To Ship" });
-        localStorage.setItem("s_db_final", JSON.stringify(orders));
-        alert("অর্ডার সফল!");
-        window.location.href = "https://wa.me/8801410273611?text=Order: " + currentItem + " | Trx: " + trx;
+        if(!trx) return alert("TrxID দিন!");
+
+        // ব্যালেন্স কমানো
+        if(currentMethod === 'Wallet Balance') {
+            walletBalance -= currentPrice;
+            localStorage.setItem("s_wallet", walletBalance);
+            initSystem();
+        }
+
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        orders.push({ id: Date.now(), name: localStorage.getItem("u_name") || "Siyam", product: currentItem, trx: trx, method: currentMethod, status: "To Ship" });
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+
+        alert("অর্ডার সফল হয়েছে!");
+        switchPage('accPage');
     }
 
-    function loadMyOrders() {
-        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
-        let display = document.getElementById("myOrdersDisplay");
-        display.innerHTML = orders.map(o => `
-            <div class="card" style="border-left: 5px solid ${o.status==='Received'?'#2ecc71':'#ff4d4d'}">
-                <span class="dot ${o.status==='Received'?'green-light':'red-light'}"></span>
-                <b>${o.status}</b> | ${o.product}<br><small>Trx: ${o.trx}</small>
-            </div>
-        `).reverse().join('') || "অর্ডার নেই।";
+    function uploadPhoto(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            localStorage.setItem("u_img", reader.result);
+            document.getElementById("uPhoto").src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // অ্যাডমিন ফাংশন
+    function setBalance() {
+        let amt = document.getElementById("newBal").value;
+        if(!amt) return;
+        localStorage.setItem("s_wallet", amt);
+        walletBalance = parseInt(amt);
+        initSystem();
+        alert("Balance Updated!");
     }
 
     function adminDoor() {
@@ -176,29 +250,29 @@
     }
 
     function refreshAdmin() {
-        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
         document.getElementById("adminTBody").innerHTML = orders.map((o, index) => `
             <tr>
-                <td>${o.name}</td><td>${o.product}</td><td>${o.trx}</td>
-                <td><button onclick="toggleS(${o.id})">Status</button></td>
-                <td><button style="color:red" onclick="delO(${index})">Del</button></td>
+                <td>${o.name}</td><td>${o.product}</td><td>${o.status}</td><td>${o.trx}</td>
+                <td><button onclick="delOrder(${index})">X</button></td>
             </tr>
         `).reverse().join('');
     }
 
-    function toggleS(id) {
-        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
-        let o = orders.find(x => x.id === id);
-        o.status = (o.status === "To Ship") ? "Received" : "To Ship";
-        localStorage.setItem("s_db_final", JSON.stringify(orders));
-        refreshAdmin(); loadMyOrders();
+    function delOrder(i) {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        orders.splice(orders.length - 1 - i, 1);
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+        refreshAdmin();
     }
 
-    function delO(index) {
-        let orders = JSON.parse(localStorage.getItem("s_db_final") || "[]");
-        orders.splice(orders.length - 1 - index, 1);
-        localStorage.setItem("s_db_final", JSON.stringify(orders));
-        refreshAdmin(); loadMyOrders();
+    function loadMyOrders() {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        document.getElementById("myOrdersDisplay").innerHTML = orders.map(o => `
+            <div class="card" style="margin-bottom:8px; border-left: 5px solid ${o.status==='Received'?'#2ecc71':'#ff4d4d'}">
+                <b>${o.status}</b> | ${o.product}<br><small>Payment: ${o.method}</small>
+            </div>
+        `).reverse().join('') || "অর্ডার নেই।";
     }
 
     function searchEngine() {
@@ -208,14 +282,9 @@
         });
     }
 
-    function checkSystem() {
-        let n = localStorage.getItem("u_name") || "Siyam Ahamed";
-        document.getElementById("uNameDisp").innerText = n + " ✎";
-    }
-
     function updateName() {
         let n = prompt("Change Name:");
-        if(n) { localStorage.setItem("u_name", n); checkSystem(); }
+        if(n) { localStorage.setItem("u_name", n); initSystem(); }
     }
 </script>
 </body>
