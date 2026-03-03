@@ -3,172 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Daraz Edition</title>
+    <title>Siyam Streetwear | Daraz Pro</title>
     <style>
-        :root { --daraz-orange: #f85606; --light-gray: #eff0f5; }
-        body { font-family: 'Roboto', sans-serif; background: var(--light-gray); margin: 0; padding-bottom: 65px; }
+        :root { --daraz-orange: #f85606; --gray-bg: #eff0f5; }
+        body { font-family: 'Roboto', sans-serif; background: var(--gray-bg); margin: 0; padding-bottom: 70px; }
         
-        /* Daraz Header */
-        header { background: #fff; padding: 10px 15px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #ddd; }
-        .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; }
-        .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
-        .search-btn { background: var(--daraz-orange); color: white; border: none; padding: 8px 15px; border-radius: 4px; font-weight: bold; }
+        /* Daraz Header & Search */
+        header { background: #fff; padding: 10px 15px; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; gap: 10px; }
+        .search-container { flex-grow: 1; display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid #ff4757; }
+        .search-container input { border: none; background: transparent; width: 100%; padding: 5px; outline: none; font-size: 14px; }
+        .search-btn { background: #ff4757; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; }
 
-        /* Banner & Flash Sale */
-        .flash-sale { background: white; margin: 10px 0; padding: 10px; }
-        .timer { color: white; background: #ff4757; padding: 2px 5px; border-radius: 3px; font-size: 14px; }
+        /* Top Features (Eid Sale, Free Delivery etc.) */
+        .top-features { display: flex; justify-content: space-around; background: #fff; padding: 10px 0; font-size: 10px; color: #757575; }
+        .feature-item { text-align: center; }
+        .feature-item img { width: 35px; margin-bottom: 3px; }
+
+        /* Welcome Voucher Section */
+        .voucher-card { background: #fff; margin: 10px; padding: 15px; border-radius: 8px; border: 1px solid #ffecec; display: flex; justify-content: space-between; align-items: center; }
+        .collect-btn { background: var(--daraz-orange); color: white; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; }
+
+        /* Flash Sale Header */
+        .flash-sale { background: #fff; padding: 15px; margin-top: 10px; }
+        .timer { background: #ff4757; color: white; padding: 2px 5px; border-radius: 3px; font-weight: bold; margin-left: 10px; }
 
         /* Product Grid */
-        .product-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
-        .p-card { background: white; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        .p-card { background: #fff; border-radius: 5px; overflow: hidden; position: relative; }
         .p-card img { width: 100%; height: 180px; object-fit: cover; }
-        .p-details { padding: 8px; }
-        .p-title { font-size: 13px; height: 32px; overflow: hidden; color: #212121; }
-        .p-price { color: var(--daraz-orange); font-size: 16px; font-weight: bold; margin: 5px 0; }
+        .p-info { padding: 8px; }
+        .p-title { font-size: 13px; color: #212121; height: 35px; overflow: hidden; margin-bottom: 5px; }
+        .p-price { color: var(--daraz-orange); font-size: 18px; font-weight: bold; }
+        .discount-tag { position: absolute; top: 5px; left: 5px; background: #ff4757; color: white; font-size: 10px; padding: 2px 5px; border-radius: 2px; }
 
         /* Account Page Style */
-        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; display: flex; align-items: center; }
-        .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid white; margin-right: 15px; }
+        .profile-header { background: linear-gradient(to bottom, #ff7e5f, #feb47b); color: white; padding: 40px 20px; display: flex; align-items: center; }
+        .profile-img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff; margin-right: 15px; }
         
-        .service-section { background: white; margin-top: 10px; display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 5px; }
-        .service-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
-        .service-item img { width: 28px; height: 28px; margin-bottom: 5px; }
+        .order-status { background: #fff; display: flex; justify-content: space-around; padding: 20px 0; border-bottom: 1px solid #eee; }
+        .status-item { text-align: center; font-size: 11px; color: #757575; }
 
-        /* Pages */
+        /* Hidden Admin Panel */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+
+        /* Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #ddd; z-index: 2000; }
+        .nav-link { text-align: center; font-size: 11px; color: #757575; text-decoration: none; cursor: pointer; }
+        .nav-link.active { color: var(--daraz-orange); }
+
         .page { display: none; }
         .active-page { display: block; }
-
-        /* Hidden Admin Table */
-        #adminSheet { display: none; position: fixed; top: 0; width: 100%; height: 100%; background: white; z-index: 5000; padding: 15px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
-        .nav-link { text-align: center; font-size: 11px; color: #757575; cursor: pointer; text-decoration: none; }
-        .nav-link.active { color: var(--daraz-orange); }
     </style>
 </head>
-<body onload="checkUser()">
+<body onload="initApp()">
 
-<header id="mainHeader">
+<header id="topHeader">
     <div class="search-container">
-        <input type="text" placeholder=" Search...">
-        <button class="search-btn">Search</button>
+        <input type="text" placeholder="Search in Daraz">
     </div>
+    <button class="search-btn">Search</button>
 </header>
 
-<div id="homePage" class="page active-page">
-    <div class="flash-sale">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: var(--daraz-orange); font-weight: bold;">Flash Sale</span>
-            <span>Ending in: <span class="timer">00:59:50</span></span>
-        </div>
+<div id="home" class="page active-page">
+    <div class="top-features">
+        <div class="feature-item">🏢<br>Eid Sale</div>
+        <div class="feature-item">🚚<br>Free Delivery</div>
+        <div class="feature-item">🎁<br>Choice</div>
+        <div class="feature-item">🛒<br>Daraz Freebie</div>
     </div>
-    
-    <div class="product-list">
+
+    <div class="voucher-card">
+        <div>
+            <b style="color:var(--daraz-orange)">Welcome: 15% OFF + Free Delivery</b><br>
+            <small>Up to ৳ 100 | New User Exclusive</small>
+        </div>
+        <button class="collect-btn">Collect All</button>
+    </div>
+
+    <div class="flash-sale">
+        <b>Flash Sale</b> <span class="timer">00 : 59 : 50</span>
+    </div>
+
+    <div class="grid">
         <div class="p-card">
+            <div class="discount-tag">-60%</div>
             <img src="1772537055301.png">
-            <div class="p-details">
-                <div class="p-title">Premium Oversized T-shirt - White Edition</div>
+            <div class="p-info">
+                <div class="p-title">Premium Oversized T-shirt - Special Edition</div>
                 <div class="p-price">৳ 400</div>
-                <button onclick="orderNow('Oversized T-shirt')" style="width: 100%; background: #f85606; color: white; border: none; padding: 5px; border-radius: 2px;">Add to Cart</button>
+                <button onclick="addToCart('Oversized T-shirt')" style="width:100%; border:none; background:var(--daraz-orange); color:#fff; padding:8px; border-radius:3px; margin-top:5px;">Add to Cart</button>
             </div>
         </div>
-        </div>
+    </div>
 </div>
 
-<div id="messagePage" class="page" style="padding: 20px; text-align: center; color: #999;">
-    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" width="80" style="opacity: 0.3; margin-top: 50px;">
-    <p>কোনো মেসেজ নেই</p>
+<div id="messages" class="page" style="text-align:center; padding-top:100px; color:#999;">
+    💬 কোনো নতুন মেসেজ নেই
 </div>
 
-<div id="accountPage" class="page">
+<div id="account" class="page">
     <div class="profile-header">
-        <div class="profile-img" style="background: #eee;"></div>
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img">
         <div>
-            <h3 id="displayUserName" style="margin: 0;">User Name</h3>
-            <p style="margin: 0; font-size: 12px; opacity: 0.8;">Verified Member</p>
+            <h3 id="uName" style="margin:0">Seam Ahamed</h3>
+            <small>Vouchers: 3 | Wishlist: 0</small>
         </div>
     </div>
 
-    <h4 style="padding: 10px 15px; margin: 0; background: #fff; border-bottom: 1px solid #eee;">My Orders</h4>
-    <div class="service-section" style="margin-top: 0; border-bottom: 15px solid var(--light-gray);">
-        <div class="service-item">📦<br>To Pay</div>
-        <div class="service-item">🚚<br>To Ship</div>
-        <div class="service-item">🏠<br>To Receive</div>
-        <div class="service-item">⭐<br>To Review</div>
+    <div class="order-status">
+        <div class="status-item">💳<br>To Pay</div>
+        <div class="status-item">📦<br>To Ship</div>
+        <div class="status-item">🚛<br>To Receive</div>
+        <div class="status-item">⭐<br>To Review</div>
     </div>
 
-    <div class="service-section">
-        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/1067/1067555.png"><br>Help</div>
-        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/942/942799.png"><br>Reviews</div>
-        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/3502/3502601.png"><br>Payment</div>
-        
-        <div class="service-item" onclick="openAdminPanel()">
-            <img src="https://cdn-icons-png.flaticon.com/512/1256/1256650.png">
-            <br>My Affiliates
+    <div style="background:#fff; margin-top:10px; display:grid; grid-template-columns: repeat(4, 1fr); padding:20px 0;">
+        <div class="status-item">Help Center</div>
+        <div class="status-item">Returns</div>
+        <div class="status-item">Payment</div>
+        <div class="status-item" onclick="openAdmin()" style="cursor:pointer">
+            🐾<br><b>My Affiliates</b>
         </div>
     </div>
 </div>
 
-<div id="adminSheet">
-    <button onclick="closeAdmin()" style="float: right;">X</button>
-    <h3>অর্ডার শিট (Admin Only)</h3>
+<div id="adminPanel">
+    <button onclick="closeAdmin()" style="float:right">Close</button>
+    <h2>Admin Order Sheet</h2>
     <table>
         <thead>
-            <tr><th>কাস্টমার</th><th>প্রোডাক্ট</th><th>তারিখ</th></tr>
+            <tr><th>Customer</th><th>Product</th><th>Date</th></tr>
         </thead>
-        <tbody id="adminEntries"></tbody>
+        <tbody id="adminTable"></tbody>
     </table>
 </div>
 
 <div class="bottom-nav">
-    <div class="nav-link active" onclick="navTo('homePage')">🏠<br>Home</div>
-    <div class="nav-link" onclick="navTo('messagePage')">💬<br>Messages</div>
+    <div class="nav-link active" onclick="showPage('home')">🏠<br>Home</div>
+    <div class="nav-link" onclick="showPage('messages')">💬<br>Messages</div>
     <div class="nav-link" onclick="window.location.href='https://wa.me/8801956273611'">🛒<br>Cart</div>
-    <div class="nav-item" onclick="navTo('accountPage')">👤<br>Account</div>
+    <div class="nav-link" onclick="showPage('account')">👤<br>Account</div>
 </div>
 
 <script>
-    function checkUser() {
-        let name = localStorage.getItem("u_name");
+    function initApp() {
+        let name = localStorage.getItem("daraz_user");
         if (!name) {
             name = prompt("আপনার নাম দিয়ে সাইন ইন করুন:");
-            localStorage.setItem("u_name", name || "Guest User");
+            localStorage.setItem("daraz_user", name || "Guest");
         }
-        document.getElementById("displayUserName").innerText = name;
+        document.getElementById("uName").innerText = name;
     }
 
-    function navTo(id) {
+    function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
-        if(id === 'accountPage') document.getElementById('mainHeader').style.display = 'none';
-        else document.getElementById('mainHeader').style.display = 'block';
+        document.getElementById('topHeader').style.display = (id === 'account') ? 'none' : 'flex';
     }
 
-    function orderNow(item) {
-        let name = localStorage.getItem("u_name");
-        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
-        orders.push({ name: name, item: item, date: new Date().toLocaleDateString() });
-        localStorage.setItem("all_orders", JSON.stringify(orders));
-        alert("কার্টে যোগ হয়েছে! সরাসরি হোয়াটসঅ্যাপে নক দিন।");
+    function addToCart(pName) {
+        let orders = JSON.parse(localStorage.getItem("pro_db") || "[]");
+        orders.push({ user: localStorage.getItem("daraz_user"), product: pName, date: new Date().toLocaleDateString() });
+        localStorage.setItem("pro_db", JSON.stringify(orders));
+        alert("অর্ডার কার্টে যোগ হয়েছে!");
     }
 
-    function openAdminPanel() {
-        let pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
-        if (pass === "2314") {
-            document.getElementById("adminSheet").style.display = "block";
-            let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
-            document.getElementById("adminEntries").innerHTML = orders.map(o => `<tr><td>${o.name}</td><td>${o.item}</td><td>${o.date}</td></tr>`).join('');
-        } else {
-            alert("আপনি এই ফিচারে অনুমোদিত নন!");
-        }
+    function openAdmin() {
+        if (prompt("অ্যাডমিন পাসওয়ার্ড:") === "2314") {
+            document.getElementById("adminPanel").style.display = "block";
+            let orders = JSON.parse(localStorage.getItem("pro_db") || "[]");
+            document.getElementById("adminTable").innerHTML = orders.map(o => `<tr><td>${o.user}</td><td>${o.product}</td><td>${o.date}</td></tr>`).join('');
+        } else { alert("এক্সেস ডিনাইড!"); }
     }
 
-    function closeAdmin() { document.getElementById("adminSheet").style.display = "none"; }
+    function closeAdmin() { document.getElementById("adminPanel").style.display = "none"; }
 </script>
 
 </body>
-        </html>
-        
+</html>
