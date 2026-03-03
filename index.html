@@ -1,139 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modern & Streetwear | Anime Edition</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siyam Streetwear | Premium E-Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background: #1a1a1a; 
-      color: #fff;
-    }
-    header {
-      background: #000;
-      color: #ff4757; 
-      padding: 40px 20px;
-      text-align: center;
-      border-bottom: 3px solid #ff4757;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 20px;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
-    .card {
-      background: #2f3542;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      text-align: center;
-      transition: transform 0.3s;
-    }
-    
-    /* ইমেজ স্লাইডার স্টাইল */
-    .img-slider {
-      display: flex;
-      overflow-x: auto;
-      gap: 10px;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      margin-bottom: 15px;
-    }
-    .img-slider::-webkit-scrollbar {
-      display: none;
-    }
-    .img-slider img {
-      flex: 0 0 100%;
-      width: 100%;
-      border-radius: 8px;
-      scroll-snap-align: start;
-      object-fit: cover;
+    :root {
+      --amazon-navy: #131921;
+      --flipkart-blue: #2874f0;
+      --accent-red: #ff4757;
+      --success-green: #388e3c;
     }
 
-    .card h3 {
-      margin: 10px 0;
-      color: #ff4757;
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f3f6; /* Flipkart gray background */
+      color: #333;
     }
-    .price {
-      font-size: 22px;
-      font-weight: bold;
-      color: #2ecc71;
-      margin: 15px 0;
-    }
-    .buy-btn {
-      display: inline-block;
-      background: #25d366; 
+
+    /* Amazon Inspired Header */
+    header {
+      background-color: var(--amazon-navy);
+      padding: 10px 5%;
       color: white;
-      text-decoration: none;
-      padding: 12px 25px;
-      border-radius: 50px;
-      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    footer {
-      background: #000;
-      color: #777;
+
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo { font-size: 1.5rem; font-weight: bold; color: #febd69; }
+
+    .search-bar {
+      display: flex;
+      flex-grow: 1;
+      margin: 0 20px;
+      max-width: 600px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px 0 0 4px;
+      border: none;
+      outline: none;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      background-color: #febd69;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    /* Flipkart Style Grid */
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* Premium Flip-Card Effect */
+    .card-container {
+      perspective: 1000px;
+      height: 480px;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    .card-container:hover .card { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* Front Design */
+    .card-front .img-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      height: 320px;
+      scrollbar-width: none;
+    }
+    .img-slider::-webkit-scrollbar { display: none; }
+    .img-slider img { flex: 0 0 100%; width: 100%; object-fit: cover; scroll-snap-align: start; }
+
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--accent-red);
+      color: white;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    .info { padding: 15px; }
+    .title { font-size: 16px; font-weight: 500; margin: 5px 0; color: #212121; }
+    .price { font-size: 20px; font-weight: bold; color: #000; margin: 8px 0; }
+    .rating { color: #388e3c; font-size: 14px; font-weight: bold; }
+
+    /* Back Design (Amazon/Flipkart Details) */
+    .card-back {
+      transform: rotateY(180deg);
+      background: #fdfdfd;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
       text-align: center;
-      padding: 25px;
+    }
+
+    .specs { margin: 20px 0; text-align: left; font-size: 14px; color: #666; }
+    .specs li { margin-bottom: 5px; }
+
+    .buy-now {
+      background: #fb641b; /* Flipkart orange */
+      color: white;
+      padding: 12px 30px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    /* WhatsApp Floating Button */
+    .wa-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #25d366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: 0.3s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    footer {
+      background: var(--amazon-navy);
+      color: #878787;
+      padding: 40px 5%;
       margin-top: 50px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Modern & Streetwear</h1>
-  <p>Premium Anime & Oversized Collection</p>
+  <div class="top-nav">
+    <div class="logo">SIYAM STREETWEAR</div>
+    <div style="font-size: 14px;">Sign In | Orders | 🛒</div>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search for premium anime t-shirts...">
+    <button>🔍</button>
+  </div>
 </header>
 
 <div class="container">
-  <div class="products">
+  <h2 style="margin-bottom: 25px;">Today's Exclusive Drops</h2>
+  
+  <div class="product-grid">
 
-    <div class="card">
-      <div class="img-slider">
-        <img src="1772536906585.png">
-        <img src="1772537055301.png">
-        <img src="1772537135821.png">
-        <img src="1772537369194.png">
-        <img src="1772537449513.png">
+    <div class="card-container">
+      <div class="card">
+        <div class="card-front">
+          <div class="discount-badge">60% OFF</div>
+          <div class="img-slider">
+            <img src="1772536906585.png">
+            <img src="1772537055301.png">
+            <img src="1772537135821.png">
+            <img src="1772537369194.png">
+            <img src="1772537449513.png">
+          </div>
+          <div class="info">
+            <div class="rating">4.8 ★ (120 Reviews)</div>
+            <div class="title">Premium Oversized T-shirt</div>
+            <div class="price">৳ 400 <span style="text-decoration: line-through; color: #878787; font-size: 14px;">৳ 1,000</span></div>
+            <p style="color: #388e3c; font-size: 12px; font-weight: bold;">FREE Delivery</p>
+          </div>
+        </div>
+        <div class="card-back">
+          <h3>Quick Specs</h3>
+          <ul class="specs">
+            <li>✅ 180 GSM Pure Cotton</li>
+            <li>✅ High-Density DTF Print</li>
+            <li>✅ Export Quality Stitching</li>
+            <li>✅ Oversized Street Fit</li>
+          </ul>
+          <a href="https://wa.me/8801956273611?text=Order: Premium Oversized T-shirt" class="buy-now">Buy Now</a>
+        </div>
       </div>
-      <h3>Premium Oversized T-shirt</h3>
-      <p>এক্সক্লুসিভ ড্রপ শোল্ডার টি-শার্ট কালেকশন।</p>
-      <div class="price">৳ 400</div>
-      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Premium Oversized T-shirt." class="buy-btn">Order on WhatsApp</a>
     </div>
 
-    <div class="card">
-      <h3>Uchiha Clan Edition</h3>
-      <p>প্রিমিয়াম কোয়ালিটি প্রিন্ট। ছবি শীঘ্রই আসছে।</p>
-      <div class="price">৳ 500</div>
-      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Uchiha Clan Edition." class="buy-btn">Order on WhatsApp</a>
     </div>
-
-    <div class="card">
-      <h3>Shadow Monarch Tee</h3>
-      <p>হেভিওয়েট ফ্যাব্রিক এবং স্টাইলিশ ফিটিং।</p>
-      <div class="price">৳ 500</div>
-      <a href="https://wa.me/8801956273611?text=Hi, I want to order the Shadow Monarch Tee." class="buy-btn">Order on WhatsApp</a>
-    </div>
-
-  </div>
 </div>
 
+<a href="https://wa.me/8801956273611" class="wa-float">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WhatsApp">
+</a>
+
 <footer>
-  <p>&copy; 2026 Modern & Streetwear. Developed by Siyam Ahamed Antor</p>
+  <p>&copy; 2026 Siyam Streetwear Bangladesh | All Rights Reserved</p>
+  <p style="font-size: 12px;">Amazon, Flipkart & Daraz Inspired Design</p>
 </footer>
 
 </body>
