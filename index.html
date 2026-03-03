@@ -3,146 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Hidden Admin Edition</title>
+    <title>Siyam Streetwear | Daraz Edition</title>
     <style>
-        :root { --daraz-orange: #f85606; --bg-gray: #eff0f5; }
-        body { font-family: sans-serif; background: var(--bg-gray); margin: 0; padding-bottom: 70px; }
+        :root { --daraz-orange: #f85606; --light-gray: #eff0f5; }
+        body { font-family: 'Roboto', sans-serif; background: var(--light-gray); margin: 0; padding-bottom: 65px; }
         
-        /* App Style Sections */
-        .section-page { display: none; padding: 15px; }
+        /* Daraz Header */
+        header { background: #fff; padding: 10px 15px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #ddd; }
+        .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; }
+        .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
+        .search-btn { background: var(--daraz-orange); color: white; border: none; padding: 8px 15px; border-radius: 4px; font-weight: bold; }
+
+        /* Banner & Flash Sale */
+        .flash-sale { background: white; margin: 10px 0; padding: 10px; }
+        .timer { color: white; background: #ff4757; padding: 2px 5px; border-radius: 3px; font-size: 14px; }
+
+        /* Product Grid */
+        .product-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+        .p-card { background: white; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .p-card img { width: 100%; height: 180px; object-fit: cover; }
+        .p-details { padding: 8px; }
+        .p-title { font-size: 13px; height: 32px; overflow: hidden; color: #212121; }
+        .p-price { color: var(--daraz-orange); font-size: 16px; font-weight: bold; margin: 5px 0; }
+
+        /* Account Page Style */
+        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; display: flex; align-items: center; }
+        .profile-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid white; margin-right: 15px; }
+        
+        .service-section { background: white; margin-top: 10px; display: grid; grid-template-columns: repeat(4, 1fr); padding: 15px 5px; }
+        .service-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
+        .service-item img { width: 28px; height: 28px; margin-bottom: 5px; }
+
+        /* Pages */
+        .page { display: none; }
         .active-page { display: block; }
 
-        /* Account Page Grid */
-        .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: white; padding: 15px; border-radius: 10px; margin-top: 15px; }
-        .service-item { text-align: center; font-size: 11px; color: #333; cursor: pointer; }
-        .service-item img { width: 30px; margin-bottom: 5px; }
-
-        /* Google Sheet Style Admin Table */
-        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; padding: 20px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background: #2874f0; color: white; }
+        /* Hidden Admin Table */
+        #adminSheet { display: none; position: fixed; top: 0; width: 100%; height: 100%; background: white; z-index: 5000; padding: 15px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
-        .nav-item { text-align: center; color: #757575; font-size: 12px; cursor: pointer; }
-        .nav-item.active { color: var(--daraz-orange); }
+        .nav-link { text-align: center; font-size: 11px; color: #757575; cursor: pointer; text-decoration: none; }
+        .nav-link.active { color: var(--daraz-orange); }
     </style>
 </head>
-<body onload="initApp()">
+<body onload="checkUser()">
 
-<div id="home" class="section-page active-page">
-    <div style="background: white; padding: 15px; border-radius: 10px;">
-        <img src="1772536906585.png" style="width:100%; border-radius:8px;">
-        <h3>Premium Oversized T-shirt</h3>
-        <p class="p-price" style="color:var(--daraz-orange); font-weight:bold;">৳ 400</p>
-        <button onclick="placeOrder('Oversized T-shirt')" style="background:var(--daraz-orange); color:white; border:none; width:100%; padding:10px; border-radius:5px;">Add to Cart</button>
+<header id="mainHeader">
+    <div class="search-container">
+        <input type="text" placeholder="সকার ফিটিং টি-শার্ট খুঁজুন...">
+        <button class="search-btn">Search</button>
     </div>
+</header>
+
+<div id="homePage" class="page active-page">
+    <div class="flash-sale">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: var(--daraz-orange); font-weight: bold;">Flash Sale</span>
+            <span>Ending in: <span class="timer">00:59:50</span></span>
+        </div>
+    </div>
+    
+    <div class="product-list">
+        <div class="p-card">
+            <img src="1772537055301.png">
+            <div class="p-details">
+                <div class="p-title">Premium Oversized T-shirt - White Edition</div>
+                <div class="p-price">৳ 400</div>
+                <button onclick="orderNow('Oversized T-shirt')" style="width: 100%; background: #f85606; color: white; border: none; padding: 5px; border-radius: 2px;">Add to Cart</button>
+            </div>
+        </div>
+        </div>
 </div>
 
-<div id="account" class="section-page">
-    <div style="background: var(--daraz-orange); color: white; padding: 20px; border-radius: 10px; margin-bottom:15px;">
-        <h2 id="uName">User</h2>
-        <p>Member Since 2026</p>
+<div id="messagePage" class="page" style="padding: 20px; text-align: center; color: #999;">
+    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" width="80" style="opacity: 0.3; margin-top: 50px;">
+    <p>কোনো মেসেজ নেই</p>
+</div>
+
+<div id="accountPage" class="page">
+    <div class="profile-header">
+        <div class="profile-img" style="background: #eee;"></div>
+        <div>
+            <h3 id="displayUserName" style="margin: 0;">User Name</h3>
+            <p style="margin: 0; font-size: 12px; opacity: 0.8;">Verified Member</p>
+        </div>
     </div>
 
-    <div class="service-grid">
-        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/1067/1067555.png"><br>Help Center</div>
+    <h4 style="padding: 10px 15px; margin: 0; background: #fff; border-bottom: 1px solid #eee;">My Orders</h4>
+    <div class="service-section" style="margin-top: 0; border-bottom: 15px solid var(--light-gray);">
+        <div class="service-item">📦<br>To Pay</div>
+        <div class="service-item">🚚<br>To Ship</div>
+        <div class="service-item">🏠<br>To Receive</div>
+        <div class="service-item">⭐<br>To Review</div>
+    </div>
+
+    <div class="service-section">
+        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/1067/1067555.png"><br>Help</div>
         <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/942/942799.png"><br>Reviews</div>
         <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/3502/3502601.png"><br>Payment</div>
         
-        <div class="service-item" onclick="secretAdminAccess()">
+        <div class="service-item" onclick="openAdminPanel()">
             <img src="https://cdn-icons-png.flaticon.com/512/1256/1256650.png">
             <br>My Affiliates
         </div>
     </div>
-
-    <div style="margin-top:20px; background:white; padding:15px; border-radius:10px;">
-        <h3>My Orders</h3>
-        <div id="userOrderList">কোনো অর্ডার নেই</div>
-    </div>
 </div>
 
-<div id="adminPanel">
-    <button onclick="closeAdmin()" style="float:right; padding:10px;">বন্ধ করুন</button>
-    <h2>Admin: Order Sheet</h2>
+<div id="adminSheet">
+    <button onclick="closeAdmin()" style="float: right;">X</button>
+    <h3>অর্ডার শিট (Admin Only)</h3>
     <table>
         <thead>
-            <tr><th>Customer</th><th>Product</th><th>Date</th><th>Action</th></tr>
+            <tr><th>কাস্টমার</th><th>প্রোডাক্ট</th><th>তারিখ</th></tr>
         </thead>
-        <tbody id="adminTableBody"></tbody>
+        <tbody id="adminEntries"></tbody>
     </table>
 </div>
 
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="changePage('home')">🏠<br>Home</div>
-    <div class="nav-item" onclick="window.location.href='https://wa.me/8801956273611'">🛒<br>Cart</div>
-    <div class="nav-item" onclick="changePage('account')">👤<br>Account</div>
+    <div class="nav-link active" onclick="navTo('homePage')">🏠<br>Home</div>
+    <div class="nav-link" onclick="navTo('messagePage')">💬<br>Messages</div>
+    <div class="nav-link" onclick="window.location.href='https://wa.me/8801956273611'">🛒<br>Cart</div>
+    <div class="nav-item" onclick="navTo('accountPage')">👤<br>Account</div>
 </div>
 
 <script>
-    function initApp() {
-        let name = localStorage.getItem("user_name");
+    function checkUser() {
+        let name = localStorage.getItem("u_name");
         if (!name) {
-            name = prompt("আপনার নাম লিখুন:");
-            localStorage.setItem("user_name", name || "Guest");
+            name = prompt("আপনার নাম দিয়ে সাইন ইন করুন:");
+            localStorage.setItem("u_name", name || "Guest User");
         }
-        document.getElementById("uName").innerText = name;
-        updateUserOrders();
+        document.getElementById("displayUserName").innerText = name;
     }
 
-    function changePage(id) {
-        document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active-page'));
+    function navTo(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
+        if(id === 'accountPage') document.getElementById('mainHeader').style.display = 'none';
+        else document.getElementById('mainHeader').style.display = 'block';
     }
 
-    // অর্ডার সেভ করা
-    function placeOrder(pName) {
-        let name = localStorage.getItem("user_name");
-        let orders = JSON.parse(localStorage.getItem("pro_orders") || "[]");
-        orders.push({ user: name, product: pName, date: new Date().toLocaleDateString(), status: "Pending" });
-        localStorage.setItem("pro_orders", JSON.stringify(orders));
-        alert("অর্ডার সফল হয়েছে!");
-        updateUserOrders();
+    function orderNow(item) {
+        let name = localStorage.getItem("u_name");
+        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
+        orders.push({ name: name, item: item, date: new Date().toLocaleDateString() });
+        localStorage.setItem("all_orders", JSON.stringify(orders));
+        alert("কার্টে যোগ হয়েছে! সরাসরি হোয়াটসঅ্যাপে নক দিন।");
     }
 
-    // গোপন অ্যাডমিন এক্সেস
-    function secretAdminAccess() {
-        let pass = prompt("গোপন পাসওয়ার্ড দিন:");
+    function openAdminPanel() {
+        let pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
         if (pass === "2314") {
-            document.getElementById("adminPanel").style.display = "block";
-            loadAdminSheet();
+            document.getElementById("adminSheet").style.display = "block";
+            let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
+            document.getElementById("adminEntries").innerHTML = orders.map(o => `<tr><td>${o.name}</td><td>${o.item}</td><td>${o.date}</td></tr>`).join('');
         } else {
-            alert("আপনার এই ফিচারে এক্সেস নেই!");
+            alert("আপনি এই ফিচারে অনুমোদিত নন!");
         }
     }
 
-    function loadAdminSheet() {
-        let orders = JSON.parse(localStorage.getItem("pro_orders") || "[]");
-        let html = orders.map((o, i) => `<tr>
-            <td>${o.user}</td>
-            <td>${o.product}</td>
-            <td>${o.date}</td>
-            <td><button onclick="confirmOrder(${i})">OK</button></td>
-        </tr>`).join('');
-        document.getElementById("adminTableBody").innerHTML = html;
-    }
-
-    function confirmOrder(i) {
-        alert("অর্ডার কনফার্ম করা হয়েছে!");
-    }
-
-    function updateUserOrders() {
-        let orders = JSON.parse(localStorage.getItem("pro_orders") || "[]");
-        let user = localStorage.getItem("user_name");
-        let my = orders.filter(o => o.user === user);
-        if(my.length > 0) {
-            document.getElementById("userOrderList").innerHTML = my.map(o => `<p>✅ ${o.product} (${o.date})</p>`).join('');
-        }
-    }
-
-    function closeAdmin() { document.getElementById("adminPanel").style.display = "none"; }
+    function closeAdmin() { document.getElementById("adminSheet").style.display = "none"; }
 </script>
 
 </body>
-</html>
+        </html>
+        
