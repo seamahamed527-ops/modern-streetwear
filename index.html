@@ -3,193 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Official App</title>
+    <title>Siyam Streetwear | Daraz Mode</title>
     <style>
-        :root { --daraz-orange: #f85606; --bg-gray: #eff0f5; }
-        body { font-family: 'Roboto', sans-serif; background: var(--bg-gray); margin: 0; padding-bottom: 70px; }
+        :root { --daraz-orange: #f85606; --bg: #eff0f5; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-top: 60px; padding-bottom: 70px; }
         
-        /* Header & Pages */
-        header { background: #fff; padding: 12px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; font-weight: bold; color: var(--daraz-orange); }
+        /* Fixed Search Bar at Top - Daraz Style */
+        .top-header { position: fixed; top: 0; width: 100%; background: #fff; padding: 10px 15px; box-sizing: border-box; z-index: 2000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; }
+        .search-box { flex-grow: 1; background: #f3f4f6; border-radius: 4px; display: flex; align-items: center; padding: 5px 10px; border: 1px solid #ddd; }
+        .search-box input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; font-size: 14px; }
+        .search-icon { color: #999; margin-right: 5px; }
+
+        /* Pages */
         .page { display: none; padding: 15px; }
         .active-page { display: block; }
 
         /* Product Card */
-        .p-card { background: white; border-radius: 8px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .p-card img { width: 100%; border-radius: 5px; }
-        .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .p-card { background: #fff; border-radius: 8px; overflow: hidden; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .p-card img { width: 100%; height: auto; display: block; }
+        .p-info { padding: 12px; }
+        .p-title { font-size: 15px; font-weight: bold; color: #212121; margin: 0; }
+        .p-price { color: var(--daraz-orange); font-size: 18px; font-weight: bold; margin: 8px 0; }
 
-        /* Payment Option Card */
-        .pay-card { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 10px; display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
-        .pay-card:hover { border-color: var(--daraz-orange); background: #fff5f0; }
-        .pay-card img { width: 45px; margin-right: 15px; }
+        /* Account Section */
+        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; }
+        .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: white; padding: 15px 5px; border-radius: 8px; margin-top: -15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .service-item { text-align: center; font-size: 11px; color: #666; cursor: pointer; position: relative; }
+        .badge { position: absolute; top: -5px; right: 15px; background: red; color: white; font-size: 10px; padding: 2px 5px; border-radius: 50%; display: none; }
 
-        /* Account & Service Grid */
-        .profile-box { background: var(--daraz-orange); color: white; padding: 30px 20px; border-radius: 0 0 20px 20px; }
-        .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: white; padding: 20px 10px; border-radius: 10px; margin-top: -20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .service-item { text-align: center; font-size: 11px; color: #666; cursor: pointer; }
-
-        /* Admin Sheet Table */
-        #adminDashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; overflow-y: auto; padding: 20px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background: #2874f0; color: white; }
+        /* Order List Style */
+        .order-item { background: #fff; padding: 10px; border-radius: 5px; margin-bottom: 8px; border-left: 4px solid var(--daraz-orange); font-size: 13px; }
 
         /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 1000; }
         .nav-item { text-align: center; font-size: 12px; color: #757575; cursor: pointer; }
         .nav-item.active { color: var(--daraz-orange); }
     </style>
 </head>
 <body onload="initApp()">
 
-<header id="appHeader">SIYAM STREETWEAR</header>
-
-<div id="home" class="page active-page">
-    <div class="p-card">
-        <img src="1772537055301.png" alt="Product">
-        <h3>Premium Oversized T-shirt</h3>
-        <p style="color:var(--daraz-orange); font-size: 20px; font-weight: bold; margin: 5px 0;">৳ 400 <span style="text-decoration: line-through; color: #999; font-size: 14px;">৳ 1,000</span></p>
-        <button class="btn-buy" onclick="goToCheckout('Premium Oversized T-shirt', 400)">অর্ডার করুন</button>
+<div class="top-header" id="searchHeader">
+    <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="mainSearch" placeholder="Search in Siyam Streetwear" onkeyup="realTimeSearch()">
     </div>
 </div>
 
-<div id="checkout" class="page">
-    <h3 style="margin-top:0;">পেমেন্ট মেথড সিলেক্ট করুন</h3>
-    <div class="pay-card" onclick="showPayInput('bKash', '01956273611')">
-        <img src="https://www.logo.wine/a/logo/BKash/BKash-Logo.wine.svg">
-        <b>bKash (01956273611)</b>
-    </div>
-    <div class="pay-card" onclick="showPayInput('Nagad', '01956273611')">
-        <img src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png">
-        <b>Nagad (01956273611)</b>
-    </div>
-    <div class="pay-card" onclick="showPayInput('Rocket', '01956273611')">
-        <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png">
-        <b>Rocket (01956273611)</b>
-    </div>
-    <div class="pay-card" onclick="showPayInput('Bank', 'IFIC Bank Detail')">
-        <img src="https://cdn-icons-png.flaticon.com/512/633/633611.png">
-        <b>IFIC Bank Transfer</b>
-    </div>
-
-    <div id="payDetailsBox" style="display:none; background: #fff; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px solid var(--daraz-orange);">
-        <p id="instruction" style="font-size: 14px; color: #333;"></p>
-        <input type="text" id="trxInput" placeholder="ট্রানজেকশন আইডি (TrxID) লিখুন" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-        <button class="btn-buy" onclick="confirmPayment()">অর্ডার কনফার্ম করুন</button>
-    </div>
-</div>
-
-<div id="account" class="page" style="padding:0;">
-    <div class="profile-box">
-        <h2 id="userNameDisplay" style="margin:0;">User Name</h2>
-        <p style="margin:0; opacity:0.8;">Verified Customer</p>
-    </div>
-    <div style="padding: 0 15px;">
-        <div class="service-grid">
-            <div class="service-item">📦<br>To Pay</div>
-            <div class="service-item">🚚<br>To Ship</div>
-            <div class="service-item">⭐<br>Reviews</div>
-            <div class="service-item" onclick="openAdmin()">
-                <img src="https://cdn-icons-png.flaticon.com/512/1256/1256650.png" style="width:25px;"><br>My Affiliates
+<div id="homePage" class="page active-page">
+    <div id="productList">
+        <div class="p-card" data-name="premium oversized t-shirt white">
+            <img src="1772537055301.png">
+            <div class="p-info">
+                <p class="p-title">Premium Oversized T-shirt - White</p>
+                <p class="p-price">৳ 400</p>
+                <button onclick="placeOrder('Oversized T-shirt White')" style="width:100%; background:var(--daraz-orange); color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold;">Buy Now</button>
+            </div>
+        </div>
+        <div class="p-card" data-name="anime t-shirt black collection">
+            <img src="30402.jpg">
+            <div class="p-info">
+                <p class="p-title">Anime T-shirt Black - Hibiscus Edition</p>
+                <p class="p-price">৳ 400</p>
+                <button onclick="placeOrder('Anime T-shirt Hibiscus')" style="width:100%; background:var(--daraz-orange); color:#fff; border:none; padding:10px; border-radius:4px; font-weight:bold;">Buy Now</button>
             </div>
         </div>
     </div>
 </div>
 
-<div id="adminDashboard">
-    <button onclick="closeAdmin()" style="float:right; padding: 10px; background: #333; color: white; border: none; border-radius: 5px;">বন্ধ করুন</button>
-    <h2 style="color: #2874f0;">অর্ডার ম্যানেজমেন্ট (গোপন শিট)</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>কাস্টমার</th>
-                <th>পণ্য</th>
-                <th>মেথড</th>
-                <th>TrxID</th>
-                <th>তারিখ</th>
-            </tr>
-        </thead>
-        <tbody id="orderTableBody"></tbody>
-    </table>
+<div id="accountPage" class="page" style="padding:0;">
+    <div class="profile-header">
+        <h2 id="uNameDisplay" style="margin:0;">Siyam</h2>
+        <p style="margin:0; opacity:0.8; font-size:12px;">Verified Customer</p>
+    </div>
+    
+    <div style="padding: 15px;">
+        <div class="service-grid">
+            <div class="service-item" onclick="showSpecificOrders('To Pay')">📦<br>To Pay <span id="payBadge" class="badge">0</span></div>
+            <div class="service-item" onclick="showSpecificOrders('To Ship')">🚚<br>To Ship <span id="shipBadge" class="badge">0</span></div>
+            <div class="service-item" onclick="showSpecificOrders('Reviews')">⭐<br>Reviews</div>
+            <div class="service-item" onclick="openAdminPanel()">🧬<br>My Affiliates</div>
+        </div>
+
+        <div id="orderStatusDisplay" style="margin-top:20px;">
+            <h4 id="statusTitle">My Orders</h4>
+            <div id="statusItems">অর্ডার দেখতে উপরের বাটনে ক্লিক করুন।</div>
+        </div>
+    </div>
 </div>
 
 <div class="bottom-nav">
-    <div class="nav-item active" onclick="changePage('home')">🏠<br>Home</div>
+    <div class="nav-item active" onclick="navTo('homePage')">🏠<br>Home</div>
     <div class="nav-item" onclick="window.location.href='https://wa.me/8801956273611'">💬<br>Messages</div>
-    <div class="nav-item" onclick="changePage('account')">👤<br>Account</div>
+    <div class="nav-item" onclick="navTo('accountPage')">👤<br>Account</div>
 </div>
 
 <script>
-    let currentOrder = { product: "", price: 0, method: "" };
-
-    function initApp() {
-        let name = localStorage.getItem("s_user");
-        if (!name) {
-            name = prompt("আপনার নাম লিখুন:");
-            if (name) localStorage.setItem("s_user", name);
-        }
-        document.getElementById("userNameDisplay").innerText = name || "Guest";
-    }
-
-    function changePage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(id).classList.add('active-page');
-    }
-
-    function goToCheckout(pName, price) {
-        currentOrder.product = pName;
-        currentOrder.price = price;
-        changePage('checkout');
-    }
-
-    function showPayInput(method, info) {
-        currentOrder.method = method;
-        document.getElementById('payDetailsBox').style.display = 'block';
-        let ins = document.getElementById('instruction');
+    // ১. রিয়েল টাইম সার্চ (Daraz Style)
+    function realTimeSearch() {
+        let input = document.getElementById('mainSearch').value.toLowerCase();
+        let cards = document.querySelectorAll('.p-card');
         
-        if(method === 'Bank') {
-            ins.innerHTML = `<b>IFIC Bank Details:</b><br>
-                Name: SIYAM AHAMED ANTOR<br>
-                A/C: 0190117377811<br>
-                Routing: 120270136<br>
-                Branch: Aganagar (Shaban Factory Uposhakha)<br>
-                টাকা পাঠিয়ে TrxID নিচে দিন।`;
-        } else {
-            ins.innerHTML = `আপনার ${method} অ্যাপ থেকে <b>${info}</b> নাম্বারে ৳${currentOrder.price} <b>Send Money</b> করুন এবং নিচে TrxID দিন।`;
-        }
+        cards.forEach(card => {
+            let name = card.getAttribute('data-name');
+            if(name.includes(input)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
     }
 
-    function confirmPayment() {
-        let trx = document.getElementById('trxInput').value;
-        if(!trx) return alert("অনুগ্রহ করে ট্রানজেকশন আইডি দিন!");
-        
+    // ২. অর্ডার সিস্টেম ও ব্যাজ আপডেট
+    function placeOrder(pName) {
         let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
         orders.push({
-            user: localStorage.getItem("s_user"),
-            product: currentOrder.product,
-            method: currentOrder.method,
-            trx: trx,
-            date: new Date().toLocaleString()
+            user: localStorage.getItem("s_user") || "Guest",
+            item: pName,
+            status: "To Ship", // ডিফল্ট স্ট্যাটাস
+            date: new Date().toLocaleDateString()
         });
         localStorage.setItem("s_orders", JSON.stringify(orders));
-        
-        alert("অর্ডার সফল হয়েছে! আপনার দেওয়া পেমেন্ট আইডি চেক করা হচ্ছে।");
-        window.location.href = "https://wa.me/8801956273611?text=আমি পেমেন্ট করেছি। TrxID: " + trx;
+        updateBadges();
+        alert("অর্ডারটি 'To Ship' সেকশনে যোগ করা হয়েছে।");
     }
 
-    function openAdmin() {
-        let pass = prompt("গোপন অ্যাডমিন পাসওয়ার্ড দিন:");
-        if (pass === "2314") {
-            document.getElementById("adminDashboard").style.display = "block";
-            let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-            let rows = orders.map(o => `<tr><td>${o.user}</td><td>${o.product}</td><td>${o.method}</td><td>${o.trx}</td><td>${o.date}</td></tr>`).reverse().join('');
-            document.getElementById("orderTableBody").innerHTML = rows;
+    function updateBadges() {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        let shipCount = orders.filter(o => o.status === "To Ship").length;
+        let payCount = orders.filter(o => o.status === "To Pay").length;
+
+        let sBadge = document.getElementById('shipBadge');
+        let pBadge = document.getElementById('payBadge');
+
+        if(shipCount > 0) { sBadge.innerText = shipCount; sBadge.style.display = "block"; }
+        if(payCount > 0) { pBadge.innerText = payCount; pBadge.style.display = "block"; }
+    }
+
+    // ৩. নির্দিষ্ট অর্ডার স্ট্যাটাস দেখানো
+    function showSpecificOrders(status) {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        let filtered = orders.filter(o => o.status === status);
+        let container = document.getElementById('statusItems');
+        document.getElementById('statusTitle').innerText = "Status: " + status;
+
+        if(filtered.length > 0) {
+            container.innerHTML = filtered.map(o => `
+                <div class="order-item">
+                    <b>${o.item}</b><br>
+                    <small>অর্ডার তারিখ: ${o.date}</small>
+                </div>
+            `).join('');
         } else {
-            alert("ভুল পাসওয়ার্ড! এটি শুধু সিয়ামের জন্য।");
+            container.innerHTML = `<p style="color:#999; font-size:12px;">এই সেকশনে কোনো অর্ডার নেই।</p>`;
         }
     }
 
-    function closeAdmin() { document.getElementById("adminDashboard").style.display = "none"; }
+    function navTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        document.getElementById('searchHeader').style.display = (pageId === 'homePage') ? 'flex' : 'none';
+    }
+
+    function initApp() {
+        let name = localStorage.getItem("s_user") || "Siyam";
+        document.getElementById("uNameDisplay").innerText = name;
+        updateBadges();
+    }
+    
+    function openAdminPanel() {
+        let p = prompt("Admin Password:");
+        if(p === "2314") alert("Admin Access Granted. (অর্ডারের তালিকা তোমার লোকাল স্টোরেজে সেভ আছে)");
+    }
 </script>
 
 </body>
