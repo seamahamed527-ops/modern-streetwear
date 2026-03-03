@@ -3,130 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Admin Panel Edition</title>
+    <title>Siyam Streetwear | Hidden Admin Edition</title>
     <style>
-        /* বেসিক স্টাইল */
-        body { font-family: 'Arial', sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-        header { background: #131921; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .container { padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        :root { --daraz-orange: #f85606; --bg-gray: #eff0f5; }
+        body { font-family: sans-serif; background: var(--bg-gray); margin: 0; padding-bottom: 70px; }
         
-        /* অ্যাডমিন প্যানেল ও টেবিল স্টাইল */
-        #adminDashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; overflow-y: auto; padding: 20px; box-sizing: border-box; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #2874f0; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        
-        .admin-btn { background: #ff4757; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-        .close-btn { background: #333; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; float: right; }
+        /* App Style Sections */
+        .section-page { display: none; padding: 15px; }
+        .active-page { display: block; }
+
+        /* Account Page Grid */
+        .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: white; padding: 15px; border-radius: 10px; margin-top: 15px; }
+        .service-item { text-align: center; font-size: 11px; color: #333; cursor: pointer; }
+        .service-item img { width: 30px; margin-bottom: 5px; }
+
+        /* Google Sheet Style Admin Table */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 5000; padding: 20px; box-sizing: border-box; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #2874f0; color: white; }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
+        .nav-item { text-align: center; color: #757575; font-size: 12px; cursor: pointer; }
+        .nav-item.active { color: var(--daraz-orange); }
     </style>
 </head>
-<body onload="checkUserStatus()">
+<body onload="initApp()">
 
-<header>
-    <div style="font-size: 20px; font-weight: bold;">SIYAM STREETWEAR</div>
-    <div onclick="openAdmin()" style="cursor:pointer; font-size: 24px; padding: 0 10px;">⋮</div>
-</header>
-
-<div class="container">
-    <div id="welcomeMsg"></div>
-    
-    <div class="card">
+<div id="home" class="section-page active-page">
+    <div style="background: white; padding: 15px; border-radius: 10px;">
+        <img src="1772536906585.png" style="width:100%; border-radius:8px;">
         <h3>Premium Oversized T-shirt</h3>
-        <p>দাম: ৳ 400</p>
-        <button onclick="makeOrder('Premium Oversized T-shirt')" style="background: #fb641b; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">অর্ডার করুন</button>
+        <p class="p-price" style="color:var(--daraz-orange); font-weight:bold;">৳ 400</p>
+        <button onclick="placeOrder('Oversized T-shirt')" style="background:var(--daraz-orange); color:white; border:none; width:100%; padding:10px; border-radius:5px;">Add to Cart</button>
     </div>
 </div>
 
-<div id="adminDashboard">
-    <button class="close-btn" onclick="closeAdmin()">বন্ধ করুন</button>
-    <h2 style="color: #131921;">অর্ডার ম্যানেজমেন্ট (গুগল শিট ভিউ)</h2>
-    
+<div id="account" class="section-page">
+    <div style="background: var(--daraz-orange); color: white; padding: 20px; border-radius: 10px; margin-bottom:15px;">
+        <h2 id="uName">User</h2>
+        <p>Member Since 2026</p>
+    </div>
+
+    <div class="service-grid">
+        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/1067/1067555.png"><br>Help Center</div>
+        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/942/942799.png"><br>Reviews</div>
+        <div class="service-item"><img src="https://cdn-icons-png.flaticon.com/512/3502/3502601.png"><br>Payment</div>
+        
+        <div class="service-item" onclick="secretAdminAccess()">
+            <img src="https://cdn-icons-png.flaticon.com/512/1256/1256650.png">
+            <br>My Affiliates
+        </div>
+    </div>
+
+    <div style="margin-top:20px; background:white; padding:15px; border-radius:10px;">
+        <h3>My Orders</h3>
+        <div id="userOrderList">কোনো অর্ডার নেই</div>
+    </div>
+</div>
+
+<div id="adminPanel">
+    <button onclick="closeAdmin()" style="float:right; padding:10px;">বন্ধ করুন</button>
+    <h2>Admin: Order Sheet</h2>
     <table>
         <thead>
-            <tr>
-                <th>কাস্টমারের নাম</th>
-                <th>পণ্যের নাম</th>
-                <th>তারিখ</th>
-                <th>স্ট্যাটাস</th>
-                <th>অ্যাকশন</th>
-            </tr>
+            <tr><th>Customer</th><th>Product</th><th>Date</th><th>Action</th></tr>
         </thead>
-        <tbody id="orderTableBody">
-            </tbody>
+        <tbody id="adminTableBody"></tbody>
     </table>
 </div>
 
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="changePage('home')">🏠<br>Home</div>
+    <div class="nav-item" onclick="window.location.href='https://wa.me/8801956273611'">🛒<br>Cart</div>
+    <div class="nav-item" onclick="changePage('account')">👤<br>Account</div>
+</div>
+
 <script>
-    // ১. কাস্টমার চেক ও অটো-লগইন
-    function checkUserStatus() {
-        let name = localStorage.getItem("c_name");
+    function initApp() {
+        let name = localStorage.getItem("user_name");
         if (!name) {
             name = prompt("আপনার নাম লিখুন:");
-            if (name) localStorage.setItem("c_name", name);
+            localStorage.setItem("user_name", name || "Guest");
         }
-        if(name) document.getElementById("welcomeMsg").innerHTML = "গোপন পাসওয়ার্ড দিয়ে অ্যাডমিন প্যানেল চেক করুন।";
+        document.getElementById("uName").innerText = name;
+        updateUserOrders();
     }
 
-    // ২. অর্ডার সেভ করা
-    function makeOrder(pName) {
-        let customer = localStorage.getItem("c_name") || "অজানা কাস্টমার";
-        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
-        
-        let newOrder = {
-            customerName: customer,
-            productName: pName,
-            date: new Date().toLocaleString(),
-            status: "Pending"
-        };
-        
-        orders.push(newOrder);
-        localStorage.setItem("all_orders", JSON.stringify(orders));
-        
-        alert("অর্ডার সফল হয়েছে! সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন।");
-        window.location.href = "https://wa.me/8801956273611?text=আমি " + pName + " অর্ডার করতে চাই।";
+    function changePage(id) {
+        document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(id).classList.add('active-page');
     }
 
-    // ৩. পাসওয়ার্ড দিয়ে অ্যাডমিন প্যানেল খোলা
-    function openAdmin() {
-        let pass = prompt("অ্যাডমিন পাসওয়ার্ড দিন:");
-        if (pass === "2314") { // তোমার দেওয়া গোপন পাসওয়ার্ড
-            document.getElementById("adminDashboard").style.display = "block";
-            loadOrders();
+    // অর্ডার সেভ করা
+    function placeOrder(pName) {
+        let name = localStorage.getItem("user_name");
+        let orders = JSON.parse(localStorage.getItem("pro_orders") || "[]");
+        orders.push({ user: name, product: pName, date: new Date().toLocaleDateString(), status: "Pending" });
+        localStorage.setItem("pro_orders", JSON.stringify(orders));
+        alert("অর্ডার সফল হয়েছে!");
+        updateUserOrders();
+    }
+
+    // গোপন অ্যাডমিন এক্সেস
+    function secretAdminAccess() {
+        let pass = prompt("গোপন পাসওয়ার্ড দিন:");
+        if (pass === "2314") {
+            document.getElementById("adminPanel").style.display = "block";
+            loadAdminSheet();
         } else {
-            alert("ভুল পাসওয়ার্ড! এটি শুধু অ্যাডমিনের জন্য।");
+            alert("আপনার এই ফিচারে এক্সেস নেই!");
         }
     }
 
-    // ৪. গুগল শিট স্টাইলে অর্ডার লোড করা
-    function loadOrders() {
-        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
-        let tableBody = document.getElementById("orderTableBody");
-        tableBody.innerHTML = "";
-
-        orders.forEach((order, index) => {
-            let row = `<tr>
-                <td>${order.customerName}</td>
-                <td>${order.productName}</td>
-                <td>${order.date}</td>
-                <td id="status-${index}">${order.status}</td>
-                <td><button onclick="confirmItem(${index})" style="background: green; color: white; border: none; padding: 5px; border-radius: 3px; cursor: pointer;">কনফার্ম</button></td>
-            </tr>`;
-            tableBody.innerHTML += row;
-        });
+    function loadAdminSheet() {
+        let orders = JSON.parse(localStorage.getItem("pro_orders") || "[]");
+        let html = orders.map((o, i) => `<tr>
+            <td>${o.user}</td>
+            <td>${o.product}</td>
+            <td>${o.date}</td>
+            <td><button onclick="confirmOrder(${i})">OK</button></td>
+        </tr>`).join('');
+        document.getElementById("adminTableBody").innerHTML = html;
     }
 
-    function confirmItem(index) {
-        let orders = JSON.parse(localStorage.getItem("all_orders") || "[]");
-        orders[index].status = "Confirmed ✅";
-        localStorage.setItem("all_orders", JSON.stringify(orders));
-        loadOrders(); // টেবিল রিফ্রেশ
+    function confirmOrder(i) {
+        alert("অর্ডার কনফার্ম করা হয়েছে!");
     }
 
-    function closeAdmin() {
-        document.getElementById("adminDashboard").style.display = "none";
+    function updateUserOrders() {
+        let orders = JSON.parse(localStorage.getItem("pro_orders") || "[]");
+        let user = localStorage.getItem("user_name");
+        let my = orders.filter(o => o.user === user);
+        if(my.length > 0) {
+            document.getElementById("userOrderList").innerHTML = my.map(o => `<p>✅ ${o.product} (${o.date})</p>`).join('');
+        }
     }
+
+    function closeAdmin() { document.getElementById("adminPanel").style.display = "none"; }
 </script>
 
 </body>
