@@ -3,40 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | All-in-One</title>
+    <title>Siyam Streetwear | Full Integrated</title>
     <style>
         :root { --daraz-orange: #f85606; --bg: #eff0f5; --admin-dark: #2c3e50; }
         body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; }
         
-        /* Layouts */
-        .page { display: none; padding: 15px; box-sizing: border-box; }
+        .page { display: none; padding: 15px; box-sizing: border-box; margin-top: 60px; }
         .active-page { display: block; }
 
-        /* Auth Page */
+        /* Auth */
         #authPage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         .auth-input { width: 100%; max-width: 300px; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
 
-        /* User UI Elements */
-        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; display: flex; justify-content: center; }
-        .search-container { width: 90%; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
+        /* Header & Cards */
+        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; text-align: center; font-weight: bold; color: var(--daraz-orange); }
         .card { background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 15px; }
         .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        
+        /* Payment */
+        .pay-card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; background: #fff; }
+        .pay-input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; margin-bottom: 10px; }
 
-        /* Messenger Chat UI */
-        #chatPage { background: #f0f2f5; display: none; flex-direction: column; height: 100vh; position: fixed; top: 0; width: 100%; z-index: 3000; }
-        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        .msg { padding: 10px; border-radius: 15px; max-width: 75%; font-size: 14px; }
-        .msg-user { align-self: flex-end; background: var(--daraz-orange); color: white; }
-        .msg-admin { align-self: flex-start; background: white; border: 1px solid #ddd; }
-
-        /* Admin UI Elements (Hidden by default) */
+        /* Admin UI */
         #adminUI { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; overflow-y: auto; }
-        .admin-header { background: var(--admin-dark); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header { background: var(--admin-dark); color: white; padding: 15px; display: flex; justify-content: space-between; }
         table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .admin-chat-list { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
 
-        /* Nav */
+        /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
         .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
     </style>
@@ -44,188 +38,195 @@
 <body onload="checkLogin()">
 
 <div id="authPage">
-    <h2 style="color: var(--daraz-orange);">Siyam Streetwear</h2>
+    <h2>Siyam Streetwear</h2>
     <input type="text" id="authName" class="auth-input" placeholder="আপনার নাম">
     <input type="password" id="authPin" class="auth-input" placeholder="পিন কোড">
-    <button class="btn-buy" style="max-width:300px;" onclick="handleAuth()">প্রবেশ করুন</button>
+    <button class="btn-buy" style="max-width:300px;" onclick="handleAuth()">Login</button>
 </div>
 
 <div id="userUI">
-    <div class="top-fixed" id="navHeader">
-        <div class="search-container"><input type="text" style="border:none; background:none; width:100%;" placeholder="Search products..."></div>
-    </div>
+    <div class="top-fixed">Siyam Streetwear</div>
 
-    <div id="homePage" class="page active-page" style="margin-top:60px;">
+    <div id="homePage" class="page active-page">
         <div class="card">
-            <img src="1772537055301.png" style="width:100%; border-radius:8px; height:200px; object-fit:cover;">
-            <p><b>Premium Oversized Hoodie</b></p>
-            <b style="color:var(--daraz-orange);">৳ 650</b>
-            <button class="btn-buy" style="margin-top:10px;" onclick="switchPage('accPage')">Buy Now</button>
+            <img src="1772537055301.png" style="width:100%; border-radius:8px; height:200px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/300x200'">
+            <p><b>Premium Oversized T-Shirt</b></p>
+            <b style="color:var(--daraz-orange);">৳ 400</b>
+            <button class="btn-buy" style="margin-top:10px;" onclick="startCheckout('T-Shirt', 400, false)">Buy Now</button>
         </div>
     </div>
 
-    <div id="accPage" class="page" style="margin-top:60px;">
+    <div id="checkPage" class="page">
+        <h3 id="payTitle">Payment</h3>
+        <div id="rechargeBox" style="display:none;" class="card">
+            <input type="number" id="rechargeAmount" class="pay-input" placeholder="কত টাকা রিচার্জ করবেন?">
+        </div>
+        
+        <div class="card">
+            <p>সিলেক্ট করুন:</p>
+            <div class="pay-card" onclick="selectMethod('bKash')">bKash (01956273611)</div>
+            <div class="pay-card" onclick="selectMethod('Nagad')">Nagad (01956273611)</div>
+        </div>
+
+        <div id="confirmBox" style="display:none;" class="card">
+            <p id="payGuide"></p>
+            <input type="number" id="senderNum" class="pay-input" placeholder="আপনার নাম্বার">
+            <input type="text" id="trxID" class="pay-input" placeholder="TrxID (ট্রানজেকশন আইডি)">
+            <button class="btn-buy" onclick="submitOrder()">Confirm Request</button>
+        </div>
+    </div>
+
+    <div id="accPage" class="page">
         <div class="card" style="text-align:center; background:var(--daraz-orange); color:white;">
             <h3 id="uNameDisp">User</h3>
-            <p id="uIDLabel">ID: SY-0000</p>
-            <p>Balance: ৳ <span id="uBalance">0</span></p>
+            <p id="uIDLabel">ID: Loading...</p>
+            <p style="font-size: 20px;">Balance: ৳ <span id="uBalance">0</span></p>
+            <button onclick="startCheckout('Recharge', 0, true)" style="background:white; color:var(--daraz-orange); border:none; padding:5px 15px; border-radius:20px; font-weight:bold;">Recharge Now</button>
         </div>
         <div class="card" style="display:flex; justify-content:space-around;">
-            <div onclick="alert('History Loading...')">🛒 History</div>
-            <div onclick="adminDoor()" style="color:red; font-weight:bold; cursor:pointer;">🧬 Admin Control</div>
+            <div onclick="adminDoor()" style="color:red; font-weight:bold;">🧬 Admin</div>
+            <div onclick="localStorage.clear(); location.reload();">🚪 Logout</div>
         </div>
-    </div>
-
-    <div id="chatPage">
-        <div style="background:var(--daraz-orange); color:white; padding:15px; font-weight:bold;">Siyam Support <span onclick="switchPage('homePage')" style="float:right;">✕</span></div>
-        <div class="chat-messages" id="userChatBox"></div>
-        <div style="padding:10px; display:flex; gap:5px; background:white;">
-            <input type="text" id="userChatInp" style="flex:1; padding:10px; border-radius:20px; border:1px solid #ddd;" placeholder="মেসেজ লিখুন...">
-            <button onclick="userSendMsg()" style="background:var(--daraz-orange); color:white; border:none; padding:10px 15px; border-radius:20px;">➔</button>
-        </div>
+        <div id="historyBox"></div>
     </div>
 
     <div class="bottom-nav">
         <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
-        <div class="nav-item" onclick="switchPage('chatPage')">💬<br>Chat</div>
         <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
     </div>
 </div>
 
 <div id="adminUI">
     <div class="admin-header">
-        <span>Admin Control Panel</span>
-        <button onclick="closeAdmin()" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px;">Logout Admin</button>
+        <span>Admin Panel</span>
+        <button onclick="document.getElementById('adminUI').style.display='none'; document.getElementById('userUI').style.display='block';" style="background:red; color:white; border:none; padding:5px;">Back</button>
     </div>
-    
     <div style="padding:15px;">
-        <h3>Orders & Recharges</h3>
-        <table>
-            <thead><tr><th>UID</th><th>Product</th><th>Amount</th><th>TrxID</th><th>Action</th></tr></thead>
-            <tbody id="adminOrderTable"></tbody>
+        <h3>Pending Orders / Recharges</h3>
+        <table border="1">
+            <thead><tr><th>User</th><th>Item</th><th>Amount</th><th>TrxID</th><th>Action</th></tr></thead>
+            <tbody id="adminTBody"></tbody>
         </table>
-
-        <h3 style="margin-top:30px;">Messenger (User Chats)</h3>
-        <div id="adminUserList"></div>
-        
-        <div id="adminPrivateChat" style="display:none; margin-top:20px; border-top:2px solid #ddd; padding-top:15px;">
-            <h4 id="chattingWithTitle">Chatting with: </h4>
-            <div id="adminChatDisplay" style="height:200px; overflow-y:auto; background:#f9f9f9; padding:10px; border-radius:10px; display:flex; flex-direction:column; gap:5px;"></div>
-            <div style="display:flex; gap:5px; margin-top:10px;">
-                <input type="text" id="adminReplyInp" style="flex:1; padding:10px;" placeholder="রিপ্লাই দিন...">
-                <button onclick="adminSendReply()" style="background:#2ecc71; color:white; border:none; padding:10px;">Send</button>
-            </div>
-        </div>
     </div>
 </div>
 
 <script>
-    let activeChatUID = "";
+    let tempOrder = { name: "", price: 0, isRecharge: false, method: "" };
 
-    // Auth & Startup
     function checkLogin() {
         if(localStorage.getItem("isLoggedIn") === "true") {
             document.getElementById("authPage").style.display = "none";
-            updateUserUI();
+            updateUI();
         }
     }
 
     function handleAuth() {
         let name = document.getElementById("authName").value;
-        if(!name) return alert("নাম দিন");
+        if(!name) return;
         localStorage.setItem("u_name", name);
         localStorage.setItem("u_id", "SY-" + Math.floor(1000+Math.random()*9000));
         localStorage.setItem("isLoggedIn", "true");
         location.reload();
     }
 
-    function updateUserUI() {
+    function updateUI() {
         document.getElementById("uNameDisp").innerText = localStorage.getItem("u_name");
         document.getElementById("uIDLabel").innerText = "ID: " + localStorage.getItem("u_id");
         document.getElementById("uBalance").innerText = localStorage.getItem("s_wallet") || "0";
-        renderUserChat();
+        loadHistory();
     }
 
     function switchPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById('chatPage').style.display = 'none';
-        if(id === 'chatPage') document.getElementById('chatPage').style.display = 'flex';
-        else document.getElementById(id).classList.add('active-page');
+        document.getElementById(id).classList.add('active-page');
     }
 
-    // Admin Door
+    function startCheckout(name, price, isRecharge) {
+        tempOrder = { name, price, isRecharge };
+        document.getElementById("payTitle").innerText = isRecharge ? "Recharge Wallet" : "Checkout: " + name;
+        document.getElementById("rechargeBox").style.display = isRecharge ? "block" : "none";
+        document.getElementById("confirmBox").style.display = "none";
+        switchPage('checkPage');
+    }
+
+    function selectMethod(m) {
+        tempOrder.method = m;
+        if(tempOrder.isRecharge) {
+            tempOrder.price = document.getElementById("rechargeAmount").value;
+            if(!tempOrder.price || tempOrder.price < 10) return alert("মিনিমাম ১০ টাকা রিচার্জ করুন");
+        }
+        document.getElementById("confirmBox").style.display = "block";
+        document.getElementById("payGuide").innerText = m + " (01956273611) এ ৳" + tempOrder.price + " সেন্ড মানি করে TrxID দিন।";
+    }
+
+    function submitOrder() {
+        let trx = document.getElementById("trxID").value;
+        let phone = document.getElementById("senderNum").value;
+        if(!trx || !phone) return alert("সব তথ্য দিন");
+
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        orders.push({
+            uID: localStorage.getItem("u_id"),
+            uName: localStorage.getItem("u_name"),
+            product: tempOrder.name,
+            amount: tempOrder.price,
+            trx: trx,
+            type: tempOrder.isRecharge ? "Recharge" : "Order",
+            status: "Pending"
+        });
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+        alert("আপনার রিকোয়েস্ট পাঠানো হয়েছে!");
+        switchPage('accPage');
+        updateUI();
+    }
+
+    function loadHistory() {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        let myID = localStorage.getItem("u_id");
+        document.getElementById("historyBox").innerHTML = "<h4>Recent History</h4>" + orders.filter(o => o.uID === myID).map(o => `
+            <div class="card" style="font-size:12px;">
+                <b>${o.product}</b> - ৳${o.amount} <br>
+                Status: <span style="color:${o.status==='Pending'?'orange':'green'}">${o.status}</span>
+            </div>
+        `).reverse().join('') || "No history.";
+    }
+
+    // Admin
     function adminDoor() {
         if(prompt("Admin Password:") === "2314") {
             document.getElementById("userUI").style.display = "none";
             document.getElementById("adminUI").style.display = "block";
-            loadAdminData();
+            loadAdminTable();
         }
     }
 
-    function closeAdmin() {
-        document.getElementById("adminUI").style.display = "none";
-        document.getElementById("userUI").style.display = "block";
-    }
-
-    // Chat System (User Side)
-    function userSendMsg() {
-        let text = document.getElementById("userChatInp").value;
-        if(!text) return;
-        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        chats.push({ uid: localStorage.getItem("u_id"), name: localStorage.getItem("u_name"), text: text, role: 'user' });
-        localStorage.setItem("s_chats", JSON.stringify(chats));
-        document.getElementById("userChatInp").value = "";
-        renderUserChat();
-    }
-
-    function renderUserChat() {
-        let myID = localStorage.getItem("u_id");
-        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        document.getElementById("userChatBox").innerHTML = chats.filter(c => c.uid === myID).map(c => `
-            <div class="msg ${c.role==='user'?'msg-user':'msg-admin'}">${c.text}</div>
-        `).join('');
-    }
-
-    // Admin Panel Logic
-    function loadAdminData() {
+    function loadAdminTable() {
         let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        document.getElementById("adminOrderTable").innerHTML = orders.map((o, i) => `
-            <tr><td>${o.uID}</td><td>${o.product}</td><td>৳${o.amount}</td><td>${o.trx}</td><td><button onclick="approve(${i})">✔</button></td></tr>
-        `).join('');
-
-        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        let users = [...new Set(chats.map(c => c.uid))];
-        document.getElementById("adminUserList").innerHTML = users.map(uid => {
-            let name = chats.find(c => c.uid === uid).name;
-            return `<div class="admin-chat-list" onclick="openAdminChat('${uid}', '${name}')">👤 ${name} (${uid})</div>`;
-        }).join('');
+        document.getElementById("adminTBody").innerHTML = orders.map((o, i) => o.status === 'Pending' ? `
+            <tr>
+                <td>${o.uName}</td>
+                <td>${o.product}</td>
+                <td>৳${o.amount}</td>
+                <td>${o.trx}</td>
+                <td><button onclick="approveOrder(${i})">Approve</button></td>
+            </tr>
+        ` : '').join('');
     }
 
-    function openAdminChat(uid, name) {
-        activeChatUID = uid;
-        document.getElementById("adminPrivateChat").style.display = "block";
-        document.getElementById("chattingWithTitle").innerText = "Chatting with: " + name;
-        renderAdminChatDisplay();
+    function approveOrder(index) {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        orders[index].status = "Confirmed";
+        
+        if(orders[index].type === "Recharge") {
+            let currentWallet = parseInt(localStorage.getItem("s_wallet") || "0");
+            localStorage.setItem("s_wallet", currentWallet + parseInt(orders[index].amount));
+        }
+        
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+        alert("Approved!");
+        loadAdminTable();
+        updateUI();
     }
-
-    function renderAdminChatDisplay() {
-        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        document.getElementById("adminChatDisplay").innerHTML = chats.filter(c => c.uid === activeChatUID).map(c => `
-            <div style="align-self: ${c.role==='admin'?'flex-end':'flex-start'}; background: ${c.role==='admin'?'#2ecc71':'#ddd'}; padding: 5px 10px; border-radius: 10px;">${c.text}</div>
-        `).join('');
-    }
-
-    function adminSendReply() {
-        let text = document.getElementById("adminReplyInp").value;
-        if(!text) return;
-        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        chats.push({ uid: activeChatUID, text: text, role: 'admin' });
-        localStorage.setItem("s_chats", JSON.stringify(chats));
-        document.getElementById("adminReplyInp").value = "";
-        renderAdminChatDisplay();
-    }
-
-    setInterval(() => { renderUserChat(); if(activeChatUID) renderAdminChatDisplay(); }, 2000);
 </script>
 </body>
 </html>
