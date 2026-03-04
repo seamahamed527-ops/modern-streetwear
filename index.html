@@ -44,7 +44,7 @@
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
-        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
+        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; text-decoration: none; }
     </style>
 </head>
 <body onload="checkLogin()">
@@ -96,7 +96,7 @@
         <div class="card" style="border: 1px solid var(--daraz-orange);">
             <p id="payGuide"></p>
             <div id="manualInputs">
-                <input type="text" id="accName" class="pay-input" placeholder="একাউন্ট নাম">
+                <input type="text" id="accIDInput" class="pay-input" readonly>
                 <input type="number" id="senderNum" class="pay-input" placeholder="আপনার নাম্বার">
                 <input type="text" id="trxInput" class="pay-input" placeholder="TrxID">
             </div>
@@ -108,8 +108,8 @@
 <div id="accPage" class="page" style="padding:0;">
     <div class="profile-header">
         <img id="uPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="u-img">
-        <h3 id="uNameDisp" style="margin:5px 0;">User</h3>
-        <span class="id-badge">ID: <span id="uIDDisp"></span></span>
+        <h3 id="uIDLabel" style="margin:5px 0;">ID: Loading...</h3>
+        <span class="id-badge">Name: <span id="uNameDisp">User</span></span>
         <br><button onclick="logout()" style="background:none; border:1px solid white; color:white; font-size:10px; margin-top:10px; padding:2px 10px; border-radius:10px;">Logout</button>
     </div>
 
@@ -143,14 +143,13 @@
 
 <div class="bottom-nav">
     <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
-    <div class="nav-item" onclick="window.location.href='https://wa.me/8801410273611'">💬<br>Chat</div>
+    <a href="https://m.me/syam.ahamed.sa" class="nav-item" target="_blank">💬<br>Chat</a>
     <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
 </div>
 
 <script>
     let currentItem = ""; let currentPrice = 0; let currentMethod = ""; let isRecharge = false;
 
-    // Login Check
     function checkLogin() {
         if(localStorage.getItem("isLoggedIn") === "true") {
             document.getElementById("authPage").style.display = "none";
@@ -180,10 +179,13 @@
 
     function initSystem() {
         let balance = localStorage.getItem("s_wallet") || "0";
+        let uID = localStorage.getItem("u_id");
         document.getElementById("uBalance").innerText = balance;
         document.getElementById("payWallet").innerText = balance;
-        document.getElementById("uIDDisp").innerText = localStorage.getItem("u_id");
+        document.getElementById("uIDLabel").innerText = "ID: " + uID;
         document.getElementById("uNameDisp").innerText = localStorage.getItem("u_name");
+        // পেমেন্ট ফিল্ডে অটো আইডি বসানো
+        document.getElementById("accIDInput").value = "User ID: " + uID;
         loadMyOrders();
     }
 
@@ -221,7 +223,7 @@
     function submitFinalOrder() {
         let phone = document.getElementById("senderNum").value;
         let trx = document.getElementById("trxInput").value;
-        let uName = document.getElementById("accName").value || localStorage.getItem("u_name");
+        let uID = localStorage.getItem("u_id");
 
         if(!isRecharge && currentMethod === 'Wallet Balance') {
             let wallet = parseInt(localStorage.getItem("s_wallet") || "0");
@@ -231,7 +233,7 @@
         }
 
         let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        orders.push({ uID: localStorage.getItem("u_id"), uName: uName, type: isRecharge?"Recharge":"Order", product: currentItem, amount: currentPrice, trx: trx, status: "Pending" });
+        orders.push({ uID: uID, uName: localStorage.getItem("u_name"), type: isRecharge?"Recharge":"Order", product: currentItem, amount: currentPrice, trx: trx, status: "Pending" });
         localStorage.setItem("s_orders", JSON.stringify(orders));
         alert("সফল হয়েছে! অ্যাডমিন চেক করবে।");
         initSystem(); switchPage('accPage');
