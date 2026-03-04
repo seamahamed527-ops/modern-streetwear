@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Advanced System</title>
+    <title>Siyam Streetwear | Full System</title>
     <style>
-        :root { --daraz-orange: #f85606; --bg: #eff0f5; --bKash: #e2136e; --nagad: #f7941d; --rocket: #8c3494; }
-        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 100px; }
+        :root { --daraz-orange: #f85606; --bg: #eff0f5; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 80px; }
         
+        /* Auth Page */
         #authPage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
-        .auth-input { width: 100%; max-width: 350px; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .auth-card { width: 100%; max-width: 350px; text-align: center; }
+        .auth-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
 
-        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; }
-        .search-container { display: flex; align-items: center; background: #f3f4f6; border-radius: 4px; margin: 0 15px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
+        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; display: flex; align-items: center; justify-content: center; }
+        .search-container { width: 90%; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
         .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
 
         .page { display: none; padding: 15px; box-sizing: border-box; }
@@ -23,20 +25,33 @@
 
         /* Payment Icons & Cards */
         .pay-card { border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; padding: 12px; margin-bottom: 10px; cursor: pointer; background: #fff; font-weight: bold; }
-        .pay-card img { width: 40px; height: 40px; margin-right: 15px; object-fit: contain; }
+        .pay-card img { width: 35px; height: 35px; margin-right: 15px; object-fit: contain; }
         .pay-input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; margin-bottom: 10px; }
+
+        .status { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; float: right; }
+        .pending { background: #fff3cd; color: #856404; }
+        .confirmed { background: #d4edda; color: #155724; }
+
+        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; text-align: center; }
+        .u-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; margin-bottom: 10px; }
+        .wallet-box { background: #fff; margin: -20px 20px 10px 20px; border-radius: 8px; padding: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        /* Admin Panel */
+        #adminPanel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; padding: 20px; overflow-y: auto; box-sizing: border-box;}
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
 
         /* Chat UI */
         #chatPage { background: #f0f2f5; display: none; flex-direction: column; height: 100vh; position: fixed; top: 0; width: 100%; z-index: 3000; }
-        .chat-header { background: var(--daraz-orange); color: white; padding: 15px; display: flex; justify-content: space-between; }
-        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .chat-header { background: var(--daraz-orange); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;}
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-bottom: 80px; }
         .msg { padding: 10px; border-radius: 10px; max-width: 80%; font-size: 14px; }
         .msg-user { align-self: flex-end; background: var(--daraz-orange); color: white; }
         .msg-admin { align-self: flex-start; background: white; border: 1px solid #ddd; }
-        .chat-input-area { background: white; padding: 10px; display: flex; gap: 5px; border-top: 1px solid #ddd; }
+        .chat-input-area { background: white; padding: 10px; display: flex; gap: 5px; border-top: 1px solid #ddd; position: fixed; bottom: 0; width: 100%; box-sizing: border-box; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
-        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
+        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; text-decoration: none; }
     </style>
 </head>
 <body onload="checkLogin()">
@@ -51,143 +66,330 @@
 </div>
 
 <div class="top-fixed" id="navHeader">
-    <div class="search-container"><input type="text" placeholder="Search products..." onkeyup="searchEngine(this.value)"></div>
+    <div class="search-container">
+        <input type="text" id="pSearch" placeholder="Search products..." onkeyup="searchEngine()">
+    </div>
 </div>
 
 <div id="homePage" class="page active-page">
-    <div class="card p-card" data-title="t-shirt">
-        <img src="1772537055301.png" style="width:100%; border-radius:8px;">
-        <h3>Premium T-shirt</h3>
+    <h3 style="margin-top:0;">Just For You</h3>
+    <div class="card p-card" data-title="premium oversized t-shirt">
+        <img src="1772537055301.png" style="width:100%; border-radius:8px; height:200px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/300x200'">
+        <p style="font-weight:bold; margin-bottom:5px;">Premium Oversized T-shirt</p>
         <b style="color:var(--daraz-orange);">৳ 400</b>
         <button class="btn-buy" onclick="buyProcess('Premium T-shirt', 400)">Buy Now</button>
     </div>
 </div>
 
 <div id="checkPage" class="page">
-    <h3 id="payTitle">পেমেন্ট মেথড সিলেক্ট করুন</h3>
+    <h3 id="payTitle" style="margin-top:0;">Payment</h3>
+    
     <div id="rechargeAmtBox" style="display:none;" class="card">
-        <input type="number" id="customAmount" class="pay-input" placeholder="টাকার পরিমাণ">
+        <input type="number" id="customAmount" class="pay-input" placeholder="কত টাকা রিচার্জ করবেন?">
     </div>
 
+    <div id="walletPayOption" class="pay-card" onclick="selectMethod('Wallet Balance')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331711.png"> Wallet Balance (৳<span id="payWallet">0</span>)
+    </div>
     <div class="pay-card" onclick="selectMethod('bKash')">
-        <img src="https://m.shadinmusic.com/PaymentIcons/bkash.png"> bKash (01956273611)
+        <img src="https://seeklogo.com/images/B/bkash-logo-0C1572FBB4-seeklogo.com.png"> bKash (01956273611)
     </div>
     <div class="pay-card" onclick="selectMethod('Nagad')">
-        <img src="https://m.shadinmusic.com/PaymentIcons/nagad.png"> Nagad (01956273611)
+        <img src="https://seeklogo.com/images/N/nagad-logo-7A70CCFEE0-seeklogo.com.png"> Nagad (01956273611)
     </div>
     <div class="pay-card" onclick="selectMethod('Rocket')">
-        <img src="https://m.shadinmusic.com/PaymentIcons/rocket.png"> Rocket (01956273611)
+        <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png"> Rocket (01956273611)
     </div>
     <div class="pay-card" onclick="selectMethod('Bank')">
         <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png"> Bank Transfer
     </div>
     
     <div id="confirmBox" style="display:none; margin-top:20px;">
-        <div class="card" style="border: 2px solid var(--daraz-orange);">
+        <div class="card" style="border: 1px solid var(--daraz-orange);">
             <p id="payGuide" style="font-weight:bold;"></p>
-            <input type="number" id="senderNum" class="pay-input" placeholder="আপনার নাম্বার">
-            <input type="text" id="trxInput" class="pay-input" placeholder="TrxID (টাকা পাঠিয়ে এখানে দিন)">
-            <button class="btn-buy" onclick="submitFinalOrder()">CONFIRM PAYMENT</button>
+            <div id="manualInputs">
+                <input type="text" id="accIDInput" class="pay-input" readonly>
+                <input type="number" id="senderNum" class="pay-input" placeholder="যে নাম্বার থেকে টাকা পাঠিয়েছেন">
+                <input type="text" id="trxInput" class="pay-input" placeholder="TrxID (ট্রানজেকশন আইডি)">
+            </div>
+            <button class="btn-buy" onclick="submitFinalOrder()">CONFIRM ORDER</button>
         </div>
+    </div>
+</div>
+
+<div id="accPage" class="page" style="padding:0;">
+    <div class="profile-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="u-img">
+        <h3 id="uIDLabel" style="margin:5px 0;">ID: Loading...</h3>
+        <p style="margin:0; font-size:14px;">Name: <span id="uNameDisp">User</span></p>
+        <button onclick="logout()" style="background:none; border:1px solid white; color:white; font-size:10px; margin-top:10px; padding:4px 12px; border-radius:10px;">Logout</button>
+    </div>
+
+    <div class="wallet-box">
+        <div>
+            <small>Balance</small><br>
+            <b style="color:var(--daraz-orange); font-size:20px;">৳ <span id="uBalance">0</span></b>
+        </div>
+        <button onclick="startRecharge()" style="padding:8px 15px; border:1px solid var(--daraz-orange); background:none; border-radius:20px; color:var(--daraz-orange); font-weight:bold; cursor:pointer;">Recharge</button>
+    </div>
+
+    <div style="padding:15px;">
+        <div class="card" style="display:flex; justify-content:space-around; text-align:center;">
+            <div onclick="loadMyOrders()" style="cursor:pointer;">🛒 History</div>
+            <div onclick="adminDoor()" style="cursor:pointer; color:red; font-weight:bold;">🧬 Admin</div>
+        </div>
+        <div id="myOrdersDisplay"></div>
     </div>
 </div>
 
 <div id="chatPage">
     <div class="chat-header">
-        <span>Siyam Support Chat</span>
-        <button onclick="switchPage('homePage')" style="background:none; border:none; color:white; font-size:20px;">×</button>
+        <span style="font-weight:bold;">Support Chat</span>
+        <button onclick="switchPage('homePage')" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">×</button>
     </div>
     <div class="chat-messages" id="chatBox"></div>
     <div class="chat-input-area">
-        <input type="text" id="chatInp" style="flex:1; padding:10px; border-radius:20px; border:1px solid #ddd;" placeholder="Type a message...">
-        <button onclick="sendMsg()" style="padding:10px; background:var(--daraz-orange); color:white; border:none; border-radius:50%;">➤</button>
+        <input type="text" id="chatInp" style="flex:1; padding:10px; border-radius:20px; border:1px solid #ddd; outline:none;" placeholder="Type a message...">
+        <button onclick="sendMsg()" style="padding:10px 15px; background:var(--daraz-orange); color:white; border:none; border-radius:20px; cursor:pointer; font-weight:bold;">Send</button>
     </div>
 </div>
 
-<div id="accPage" class="page" style="padding:0;">
-    <div style="background:var(--daraz-orange); color:white; padding:30px; text-align:center;">
-        <h3 id="uIDLabel">ID: Loading...</h3>
-        <p id="uNameDisp">User</p>
+<div id="adminPanel">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 style="margin:0; color:var(--daraz-orange);">Admin Control Panel</h3>
+        <button onclick="document.getElementById('adminPanel').style.display='none'" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px;">Close</button>
     </div>
-    <div style="margin: -20px 20px 0; background:white; padding:15px; border-radius:8px; display:flex; justify-content:space-between; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-        <b>Balance: ৳ <span id="uBalance">0</span></b>
-        <button onclick="startRecharge()" style="color:var(--daraz-orange); border:1px solid; background:none; border-radius:10px;">Recharge</button>
-    </div>
-    <div id="myOrdersDisplay" style="padding:20px;"></div>
+    <table>
+        <thead><tr><th>User / Item</th><th>Amount / Trx</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="adminTBody"></tbody>
+    </table>
 </div>
 
 <div class="bottom-nav">
     <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
-    <div class="nav-item" onclick="openChat()">💬<br>Support</div>
+    <div class="nav-item" onclick="switchPage('chatPage')">💬<br>Support</div>
     <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
 </div>
 
 <script>
-    let isRecharge = false; let currentPrice = 0; let currentItem = "";
+    let currentItem = ""; let currentPrice = 0; let currentMethod = ""; let isRecharge = false;
 
-    function checkLogin() { if(localStorage.getItem("isLoggedIn") === "true") { document.getElementById("authPage").style.display = "none"; initUI(); } }
+    // Authentication Logic
+    function checkLogin() {
+        if(localStorage.getItem("isLoggedIn") === "true") {
+            document.getElementById("authPage").style.display = "none";
+            initSystem();
+        }
+    }
 
     function handleAuth() {
-        let n = document.getElementById("authName").value;
-        let p = document.getElementById("authPin").value;
-        if(n.length < 3) return alert("নাম দিন");
-        localStorage.setItem("u_name", n); localStorage.setItem("isLoggedIn", "true");
-        if(!localStorage.getItem("u_id")) localStorage.setItem("u_id", "SY-"+Math.floor(1000+Math.random()*9000));
+        let name = document.getElementById("authName").value;
+        let pin = document.getElementById("authPin").value;
+        if(name.length < 3 || pin.length < 4) return alert("সঠিক নাম ও ৪ ডিজিট পিন দিন");
+
+        localStorage.setItem("u_name", name);
+        localStorage.setItem("u_pin", pin);
+        localStorage.setItem("isLoggedIn", "true");
+        if(!localStorage.getItem("u_id")) {
+            localStorage.setItem("u_id", "SY-" + Math.floor(1000 + Math.random() * 9000));
+        }
+        document.getElementById("authPage").style.display = "none";
+        initSystem();
+    }
+
+    function logout() {
+        localStorage.setItem("isLoggedIn", "false");
         location.reload();
     }
 
-    function initUI() {
-        document.getElementById("uIDLabel").innerText = "ID: " + localStorage.getItem("u_id");
+    // System Initialization
+    function initSystem() {
+        let balance = localStorage.getItem("s_wallet") || "0";
+        let uID = localStorage.getItem("u_id");
+        
+        document.getElementById("uBalance").innerText = balance;
+        document.getElementById("payWallet").innerText = balance;
+        document.getElementById("uIDLabel").innerText = "ID: " + uID;
         document.getElementById("uNameDisp").innerText = localStorage.getItem("u_name");
-        document.getElementById("uBalance").innerText = localStorage.getItem("s_wallet") || "0";
-        loadOrders(); renderChat();
+        document.getElementById("accIDInput").value = "User ID: " + uID;
+        
+        loadMyOrders();
+        renderChat();
     }
 
+    // Navigation Logic
     function switchPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById('chatPage').style.display = 'none';
-        if(id === 'chatPage') { document.getElementById('chatPage').style.display = 'flex'; } 
-        else { document.getElementById(id).classList.add('active-page'); }
+        
+        if(id === 'chatPage') {
+            document.getElementById('chatPage').style.display = 'flex';
+        } else {
+            document.getElementById(id).classList.add('active-page');
+            document.getElementById('navHeader').style.display = (id === 'accPage') ? 'none' : 'flex';
+        }
     }
 
-    function buyProcess(name, price) { isRecharge = false; currentItem = name; currentPrice = price; switchPage('checkPage'); }
-    function startRecharge() { isRecharge = true; currentItem = "Recharge"; document.getElementById("rechargeAmtBox").style.display="block"; switchPage('checkPage'); }
+    // Buying & Recharge Flow
+    function buyProcess(name, price) {
+        isRecharge = false; currentItem = name; currentPrice = price;
+        document.getElementById("rechargeAmtBox").style.display = "none";
+        document.getElementById("walletPayOption").style.display = "flex"; // Show Wallet for buying
+        document.getElementById("confirmBox").style.display = "none";
+        switchPage('checkPage');
+    }
+
+    function startRecharge() {
+        isRecharge = true; currentItem = "Wallet Recharge";
+        document.getElementById("rechargeAmtBox").style.display = "block";
+        document.getElementById("walletPayOption").style.display = "none"; // Hide Wallet for recharging
+        document.getElementById("confirmBox").style.display = "none";
+        switchPage('checkPage');
+    }
 
     function selectMethod(m) {
-        if(isRecharge) { currentPrice = document.getElementById("customAmount").value; if(currentPrice < 10) return alert("Min 10 TK"); }
-        document.getElementById("confirmBox").style.display = "block";
-        document.getElementById("payGuide").innerText = m === 'Bank' ? "Bank: Dutch Bangla (Acc: 123456789)" : `Send ৳${currentPrice} to 01956273611 (${m})`;
+        currentMethod = m;
+        if(isRecharge) {
+            currentPrice = document.getElementById("customAmount").value;
+            if(!currentPrice || currentPrice < 10) return alert("মিনিমাম ১০ টাকা রিচার্জ করুন");
+        }
+        
+        document.getElementById('confirmBox').style.display = 'block';
+        
+        if(m === 'Wallet Balance') {
+            document.getElementById('payGuide').innerHTML = `আপনার ওয়ালেট থেকে ৳${currentPrice} কাটা হবে।`;
+            document.getElementById('manualInputs').style.display = 'none';
+        } else if(m === 'Bank') {
+            document.getElementById('payGuide').innerHTML = `Dutch Bangla Bank<br>A/C: 123456789<br>Amount: ৳${currentPrice}`;
+            document.getElementById('manualInputs').style.display = 'block';
+        } else {
+            document.getElementById('payGuide').innerHTML = `Send ৳${currentPrice} to 01956273611 (${m})`;
+            document.getElementById('manualInputs').style.display = 'block';
+        }
     }
 
     function submitFinalOrder() {
+        let phone = document.getElementById("senderNum").value;
         let trx = document.getElementById("trxInput").value;
-        if(!trx) return alert("TrxID দিন");
+        let uID = localStorage.getItem("u_id");
+
+        // Handle Wallet Payment instantly
+        if(!isRecharge && currentMethod === 'Wallet Balance') {
+            let wallet = parseInt(localStorage.getItem("s_wallet") || "0");
+            if(wallet < currentPrice) return alert("আপনার ওয়ালেটে পর্যাপ্ত টাকা নেই!");
+            
+            localStorage.setItem("s_wallet", wallet - currentPrice);
+            phone = "WALLET"; trx = "INTERNAL-PAY";
+        } else {
+            if(!trx) return alert("দয়া করে TrxID দিন!");
+        }
+
         let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        orders.push({ uID: localStorage.getItem("u_id"), product: currentItem, amount: currentPrice, trx: trx, status: "Pending" });
+        orders.push({ 
+            uID: uID, 
+            uName: localStorage.getItem("u_name"), 
+            type: isRecharge ? "Recharge" : "Order", 
+            product: currentItem, 
+            amount: currentPrice, 
+            trx: trx, 
+            status: (currentMethod === 'Wallet Balance') ? "Confirmed" : "Pending" 
+        });
+        
         localStorage.setItem("s_orders", JSON.stringify(orders));
-        alert("Success!"); location.reload();
+        alert("সফল হয়েছে!");
+        initSystem(); 
+        switchPage('accPage');
     }
 
-    function loadOrders() {
+    function loadMyOrders() {
         let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        document.getElementById("myOrdersDisplay").innerHTML = "<h4>Orders:</h4>" + orders.filter(o => o.uID === localStorage.getItem("u_id")).map(o => `<div class="card"><b>${o.product}</b> - ${o.status}</div>`).join('');
+        let myID = localStorage.getItem("u_id");
+        document.getElementById("myOrdersDisplay").innerHTML = orders.filter(o => o.uID === myID).map(o => `
+            <div class="card">
+                <span class="status ${o.status.toLowerCase()}">${o.status}</span>
+                <b>${o.product}</b><br>
+                <small>৳${o.amount} | Trx: ${o.trx}</small>
+            </div>
+        `).reverse().join('') || "<p style='text-align:center;'>No history found.</p>";
+    }
+
+    // Admin Panel Functions
+    function adminDoor() {
+        if(prompt("Enter Admin Password:") === "2314") {
+            document.getElementById("adminPanel").style.display = "block";
+            refreshAdminTable();
+        } else {
+            alert("Wrong Password!");
+        }
+    }
+
+    function refreshAdminTable() {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        document.getElementById("adminTBody").innerHTML = orders.map((o, i) => `
+            <tr>
+                <td><b>${o.uID}</b><br><small>${o.product}</small></td>
+                <td>৳${o.amount}<br><small>${o.trx}</small></td>
+                <td><span class="status ${o.status.toLowerCase()}">${o.status}</span></td>
+                <td>
+                    ${o.status === 'Pending' ? `<button style="background:#2ecc71; color:white; border:none; padding:5px; border-radius:3px; cursor:pointer;" onclick="confirmAction(${i})">Approve</button>` : 'Done'}
+                    <button style="background:#e74c3c; color:white; border:none; padding:5px; border-radius:3px; cursor:pointer; margin-top:5px;" onclick="deleteOrder(${i})">Del</button>
+                </td>
+            </tr>
+        `).reverse().join('');
+    }
+
+    function confirmAction(reverseIndex) {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        let actualIndex = orders.length - 1 - reverseIndex;
+        
+        if(orders[actualIndex].status === "Confirmed") return;
+        
+        // Add money to wallet if it's a recharge
+        if(orders[actualIndex].type === "Recharge") {
+            let currentWallet = parseInt(localStorage.getItem("s_wallet") || "0");
+            localStorage.setItem("s_wallet", currentWallet + parseInt(orders[actualIndex].amount));
+        }
+        
+        orders[actualIndex].status = "Confirmed";
+        localStorage.setItem("s_orders", JSON.stringify(orders));
+        initSystem(); 
+        refreshAdminTable();
+    }
+
+    function deleteOrder(reverseIndex) {
+        if(confirm("অর্ডারটি ডিলিট করতে চান?")) {
+            let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+            let actualIndex = orders.length - 1 - reverseIndex;
+            orders.splice(actualIndex, 1);
+            localStorage.setItem("s_orders", JSON.stringify(orders));
+            initSystem();
+            refreshAdminTable();
+        }
+    }
+
+    // Search Engine
+    function searchEngine() {
+        let q = document.getElementById("pSearch").value.toLowerCase();
+        document.querySelectorAll(".p-card").forEach(c => {
+            c.style.display = c.getAttribute("data-title").includes(q) ? "block" : "none";
+        });
     }
 
     // Chat Functions
-    function openChat() { switchPage('chatPage'); renderChat(); }
     function sendMsg() {
-        let t = document.getElementById("chatInp").value; if(!t) return;
+        let text = document.getElementById("chatInp").value;
+        if(!text) return;
         let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        chats.push({ sender: localStorage.getItem("u_id"), text: t, role: 'user' });
+        chats.push({ sender: localStorage.getItem("u_id"), text: text, role: 'user' });
         localStorage.setItem("s_chats", JSON.stringify(chats));
-        document.getElementById("chatInp").value = ''; renderChat();
+        document.getElementById("chatInp").value = '';
+        renderChat();
     }
+
     function renderChat() {
         let uID = localStorage.getItem("u_id");
         let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        document.getElementById("chatBox").innerHTML = chats.filter(c => c.sender === uID || c.receiver === uID).map(c => `<div class="msg ${c.role==='user'?'msg-user':'msg-admin'}">${c.text}</div>`).join('');
-    }
-    setInterval(renderChat, 3000);
-</script>
-</body>
-</html>
+        let chatBox = document.getElementById("chatBox");
+        chatBox.innerHTML = chats.filter(c => c.sender === uID || c.receiver === uID).map(c => `
+            <div class="msg ${c.role==='user'?'msg-user':'msg-admin'}">${c.text}</div>
+        `).join(''
