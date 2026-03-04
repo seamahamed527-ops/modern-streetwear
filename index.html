@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Shop</title>
+    <title>Siyam Streetwear | All-in-One</title>
     <style>
-        :root { --daraz-orange: #f85606; --bg: #eff0f5; }
-        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; padding-top: 80px; }
+        :root { --daraz-orange: #f85606; --bg: #eff0f5; --admin-dark: #2c3e50; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; }
         
-        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; display: flex; align-items: center; justify-content: center; }
-        .search-container { width: 90%; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
-        .search-container input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; }
-
+        /* Layouts */
         .page { display: none; padding: 15px; box-sizing: border-box; }
         .active-page { display: block; }
 
+        /* Auth Page */
+        #authPage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .auth-input { width: 100%; max-width: 300px; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+
+        /* User UI Elements */
+        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 0; display: flex; justify-content: center; }
+        .search-container { width: 90%; background: #f3f4f6; border-radius: 4px; padding: 5px 10px; border: 1px solid var(--daraz-orange); }
         .card { background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
-        #authPage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
-        .auth-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
-
-        .profile-header { background: var(--daraz-orange); color: white; padding: 30px 20px; text-align: center; }
-        .wallet-box { background: #fff; margin: -20px 20px 10px 20px; border-radius: 8px; padding: 15px; display: flex; justify-content: space-between; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-
-        /* Messenger Style Chat */
-        #chatPage { background: #fff; display: none; flex-direction: column; height: 100vh; position: fixed; top: 0; width: 100%; z-index: 3000; }
-        .chat-box { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f0f2f5; }
-        .msg { padding: 10px 15px; border-radius: 18px; max-width: 75%; font-size: 14px; }
+        /* Messenger Chat UI */
+        #chatPage { background: #f0f2f5; display: none; flex-direction: column; height: 100vh; position: fixed; top: 0; width: 100%; z-index: 3000; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .msg { padding: 10px; border-radius: 15px; max-width: 75%; font-size: 14px; }
         .msg-user { align-self: flex-end; background: var(--daraz-orange); color: white; }
-        .msg-admin { align-self: flex-start; background: #e4e6eb; color: black; }
-        .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #ddd; }
+        .msg-admin { align-self: flex-start; background: white; border: 1px solid #ddd; }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; }
+        /* Admin UI Elements (Hidden by default) */
+        #adminUI { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; overflow-y: auto; }
+        .admin-header { background: var(--admin-dark); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .admin-chat-list { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+
+        /* Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
         .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
     </style>
 </head>
@@ -42,71 +47,103 @@
     <h2 style="color: var(--daraz-orange);">Siyam Streetwear</h2>
     <input type="text" id="authName" class="auth-input" placeholder="আপনার নাম">
     <input type="password" id="authPin" class="auth-input" placeholder="পিন কোড">
-    <button class="btn-buy" onclick="handleAuth()">প্রবেশ করুন</button>
+    <button class="btn-buy" style="max-width:300px;" onclick="handleAuth()">প্রবেশ করুন</button>
 </div>
 
-<div class="top-fixed" id="navHeader">
-    <div class="search-container"><input type="text" placeholder="Search products..."></div>
-</div>
+<div id="userUI">
+    <div class="top-fixed" id="navHeader">
+        <div class="search-container"><input type="text" style="border:none; background:none; width:100%;" placeholder="Search products..."></div>
+    </div>
 
-<div id="homePage" class="page active-page">
-    <div class="card">
-        <img src="1772537055301.png" style="width:100%; border-radius:8px;">
-        <p><b>Premium Oversized T-shirt</b></p>
-        <b style="color:var(--daraz-orange);">৳ 400</b>
-        <button class="btn-buy" onclick="alert('Checkout এ যান')">Buy Now</button>
+    <div id="homePage" class="page active-page" style="margin-top:60px;">
+        <div class="card">
+            <img src="1772537055301.png" style="width:100%; border-radius:8px; height:200px; object-fit:cover;">
+            <p><b>Premium Oversized Hoodie</b></p>
+            <b style="color:var(--daraz-orange);">৳ 650</b>
+            <button class="btn-buy" style="margin-top:10px;" onclick="switchPage('accPage')">Buy Now</button>
+        </div>
+    </div>
+
+    <div id="accPage" class="page" style="margin-top:60px;">
+        <div class="card" style="text-align:center; background:var(--daraz-orange); color:white;">
+            <h3 id="uNameDisp">User</h3>
+            <p id="uIDLabel">ID: SY-0000</p>
+            <p>Balance: ৳ <span id="uBalance">0</span></p>
+        </div>
+        <div class="card" style="display:flex; justify-content:space-around;">
+            <div onclick="alert('History Loading...')">🛒 History</div>
+            <div onclick="adminDoor()" style="color:red; font-weight:bold; cursor:pointer;">🧬 Admin Control</div>
+        </div>
+    </div>
+
+    <div id="chatPage">
+        <div style="background:var(--daraz-orange); color:white; padding:15px; font-weight:bold;">Siyam Support <span onclick="switchPage('homePage')" style="float:right;">✕</span></div>
+        <div class="chat-messages" id="userChatBox"></div>
+        <div style="padding:10px; display:flex; gap:5px; background:white;">
+            <input type="text" id="userChatInp" style="flex:1; padding:10px; border-radius:20px; border:1px solid #ddd;" placeholder="মেসেজ লিখুন...">
+            <button onclick="userSendMsg()" style="background:var(--daraz-orange); color:white; border:none; padding:10px 15px; border-radius:20px;">➔</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
+        <div class="nav-item" onclick="switchPage('chatPage')">💬<br>Chat</div>
+        <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
     </div>
 </div>
 
-<div id="accPage" class="page" style="padding:0;">
-    <div class="profile-header">
-        <h3 id="uNameDisp">Siyam</h3>
-        <small id="uIDLabel">ID: SY-0000</small>
+<div id="adminUI">
+    <div class="admin-header">
+        <span>Admin Control Panel</span>
+        <button onclick="closeAdmin()" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px;">Logout Admin</button>
     </div>
-    <div class="wallet-box">
-        <span>Balance: <b>৳ <span id="uBalance">0</span></b></span>
-        <button style="color:var(--daraz-orange); border:none; background:none; font-weight:bold;">Recharge</button>
-    </div>
-    <div id="myOrdersDisplay" style="padding:15px;"></div>
-</div>
+    
+    <div style="padding:15px;">
+        <h3>Orders & Recharges</h3>
+        <table>
+            <thead><tr><th>UID</th><th>Product</th><th>Amount</th><th>TrxID</th><th>Action</th></tr></thead>
+            <tbody id="adminOrderTable"></tbody>
+        </table>
 
-<div id="chatPage">
-    <div style="background:var(--daraz-orange); color:white; padding:15px; font-weight:bold;">Support Chat <span onclick="switchPage('homePage')" style="float:right;">✕</span></div>
-    <div class="chat-box" id="chatBox"></div>
-    <div class="chat-input">
-        <input type="text" id="chatInp" style="flex:1; border-radius:20px; border:1px solid #ddd; padding:10px;" placeholder="মেসেজ লিখুন...">
-        <button onclick="sendMsg()" style="background:var(--daraz-orange); color:white; border:none; border-radius:50%; width:40px; height:40px;">➔</button>
+        <h3 style="margin-top:30px;">Messenger (User Chats)</h3>
+        <div id="adminUserList"></div>
+        
+        <div id="adminPrivateChat" style="display:none; margin-top:20px; border-top:2px solid #ddd; padding-top:15px;">
+            <h4 id="chattingWithTitle">Chatting with: </h4>
+            <div id="adminChatDisplay" style="height:200px; overflow-y:auto; background:#f9f9f9; padding:10px; border-radius:10px; display:flex; flex-direction:column; gap:5px;"></div>
+            <div style="display:flex; gap:5px; margin-top:10px;">
+                <input type="text" id="adminReplyInp" style="flex:1; padding:10px;" placeholder="রিপ্লাই দিন...">
+                <button onclick="adminSendReply()" style="background:#2ecc71; color:white; border:none; padding:10px;">Send</button>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="bottom-nav">
-    <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
-    <div class="nav-item" onclick="switchPage('chatPage')">💬<br>Chat</div>
-    <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
 </div>
 
 <script>
+    let activeChatUID = "";
+
+    // Auth & Startup
     function checkLogin() {
         if(localStorage.getItem("isLoggedIn") === "true") {
             document.getElementById("authPage").style.display = "none";
-            updateUI();
+            updateUserUI();
         }
     }
 
     function handleAuth() {
         let name = document.getElementById("authName").value;
-        if(!name) return;
+        if(!name) return alert("নাম দিন");
         localStorage.setItem("u_name", name);
         localStorage.setItem("u_id", "SY-" + Math.floor(1000+Math.random()*9000));
         localStorage.setItem("isLoggedIn", "true");
         location.reload();
     }
 
-    function updateUI() {
+    function updateUserUI() {
         document.getElementById("uNameDisp").innerText = localStorage.getItem("u_name");
         document.getElementById("uIDLabel").innerText = "ID: " + localStorage.getItem("u_id");
         document.getElementById("uBalance").innerText = localStorage.getItem("s_wallet") || "0";
-        renderChat();
+        renderUserChat();
     }
 
     function switchPage(id) {
@@ -116,25 +153,79 @@
         else document.getElementById(id).classList.add('active-page');
     }
 
-    function sendMsg() {
-        let text = document.getElementById("chatInp").value;
-        if(!text) return;
-        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        chats.push({ uid: localStorage.getItem("u_id"), name: localStorage.getItem("u_name"), text: text, role: 'user', time: new Date().toLocaleTimeString() });
-        localStorage.setItem("s_chats", JSON.stringify(chats));
-        document.getElementById("chatInp").value = "";
-        renderChat();
+    // Admin Door
+    function adminDoor() {
+        if(prompt("Admin Password:") === "2314") {
+            document.getElementById("userUI").style.display = "none";
+            document.getElementById("adminUI").style.display = "block";
+            loadAdminData();
+        }
     }
 
-    function renderChat() {
+    function closeAdmin() {
+        document.getElementById("adminUI").style.display = "none";
+        document.getElementById("userUI").style.display = "block";
+    }
+
+    // Chat System (User Side)
+    function userSendMsg() {
+        let text = document.getElementById("userChatInp").value;
+        if(!text) return;
+        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
+        chats.push({ uid: localStorage.getItem("u_id"), name: localStorage.getItem("u_name"), text: text, role: 'user' });
+        localStorage.setItem("s_chats", JSON.stringify(chats));
+        document.getElementById("userChatInp").value = "";
+        renderUserChat();
+    }
+
+    function renderUserChat() {
         let myID = localStorage.getItem("u_id");
         let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
-        document.getElementById("chatBox").innerHTML = chats.filter(c => c.uid === myID).map(c => `
+        document.getElementById("userChatBox").innerHTML = chats.filter(c => c.uid === myID).map(c => `
             <div class="msg ${c.role==='user'?'msg-user':'msg-admin'}">${c.text}</div>
         `).join('');
     }
-    setInterval(renderChat, 2000);
+
+    // Admin Panel Logic
+    function loadAdminData() {
+        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
+        document.getElementById("adminOrderTable").innerHTML = orders.map((o, i) => `
+            <tr><td>${o.uID}</td><td>${o.product}</td><td>৳${o.amount}</td><td>${o.trx}</td><td><button onclick="approve(${i})">✔</button></td></tr>
+        `).join('');
+
+        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
+        let users = [...new Set(chats.map(c => c.uid))];
+        document.getElementById("adminUserList").innerHTML = users.map(uid => {
+            let name = chats.find(c => c.uid === uid).name;
+            return `<div class="admin-chat-list" onclick="openAdminChat('${uid}', '${name}')">👤 ${name} (${uid})</div>`;
+        }).join('');
+    }
+
+    function openAdminChat(uid, name) {
+        activeChatUID = uid;
+        document.getElementById("adminPrivateChat").style.display = "block";
+        document.getElementById("chattingWithTitle").innerText = "Chatting with: " + name;
+        renderAdminChatDisplay();
+    }
+
+    function renderAdminChatDisplay() {
+        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
+        document.getElementById("adminChatDisplay").innerHTML = chats.filter(c => c.uid === activeChatUID).map(c => `
+            <div style="align-self: ${c.role==='admin'?'flex-end':'flex-start'}; background: ${c.role==='admin'?'#2ecc71':'#ddd'}; padding: 5px 10px; border-radius: 10px;">${c.text}</div>
+        `).join('');
+    }
+
+    function adminSendReply() {
+        let text = document.getElementById("adminReplyInp").value;
+        if(!text) return;
+        let chats = JSON.parse(localStorage.getItem("s_chats") || "[]");
+        chats.push({ uid: activeChatUID, text: text, role: 'admin' });
+        localStorage.setItem("s_chats", JSON.stringify(chats));
+        document.getElementById("adminReplyInp").value = "";
+        renderAdminChatDisplay();
+    }
+
+    setInterval(() => { renderUserChat(); if(activeChatUID) renderAdminChatDisplay(); }, 2000);
 </script>
 </body>
 </html>
-
