@@ -3,230 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyam Streetwear | Full Integrated</title>
+    <title>Modern Streetware - Shop</title>
     <style>
-        :root { --daraz-orange: #f85606; --bg: #eff0f5; --admin-dark: #2c3e50; }
-        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; }
-        
-        .page { display: none; padding: 15px; box-sizing: border-box; margin-top: 60px; }
-        .active-page { display: block; }
+        /* CSS স্টাইল */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        /* Auth */
-        #authPage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-        .auth-input { width: 100%; max-width: 300px; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        body {
+            background-color: #f4f4f4;
+        }
 
-        /* Header & Cards */
-        .top-fixed { position: fixed; top: 0; width: 100%; z-index: 1000; background: #fff; border-bottom: 1px solid #ddd; padding: 15px 0; text-align: center; font-weight: bold; color: var(--daraz-orange); }
-        .card { background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .btn-buy { background: var(--daraz-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        
-        /* Payment */
-        .pay-card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 10px; cursor: pointer; background: #fff; }
-        .pay-input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; margin-bottom: 10px; }
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-        /* Admin UI */
-        #adminUI { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 5000; overflow-y: auto; }
-        .admin-header { background: var(--admin-dark); color: white; padding: 15px; display: flex; justify-content: space-between; }
-        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        header h1 {
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ddd; z-index: 2000; }
-        .nav-item { text-align: center; font-size: 11px; color: #757575; cursor: pointer; }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* প্রোডাক্ট গ্রিড */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background-color: #ddd; /* ছবির জায়গায় ডামি কালার */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #e67e22;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* হোয়াটসঅ্যাপ বাটন */
+        .buy-btn {
+            display: inline-block;
+            background-color: #25d366;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .buy-btn:hover {
+            background-color: #128c7e;
+        }
+
+        @media (max-width: 600px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr); /* মোবাইলে এক সারিতে ২ টি ছবি */
+                gap: 10px;
+            }
+            .product-image { height: 200px; }
+            .product-title { font-size: 14px; }
+        }
     </style>
 </head>
-<body onload="checkLogin()">
+<body>
 
-<div id="authPage">
-    <h2>Siyam Streetwear</h2>
-    <input type="text" id="authName" class="auth-input" placeholder="আপনার নাম">
-    <input type="password" id="authPin" class="auth-input" placeholder="পিন কোড">
-    <button class="btn-buy" style="max-width:300px;" onclick="handleAuth()">Login</button>
-</div>
+    <header>
+        <h1>Modern Streetware</h1>
+    </header>
 
-<div id="userUI">
-    <div class="top-fixed">Siyam Streetwear</div>
-
-    <div id="homePage" class="page active-page">
-        <div class="card">
-            <img src="1772537055301.png" style="width:100%; border-radius:8px; height:200px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/300x200'">
-            <p><b>Premium Oversized T-Shirt</b></p>
-            <b style="color:var(--daraz-orange);">৳ 400</b>
-            <button class="btn-buy" style="margin-top:10px;" onclick="startCheckout('T-Shirt', 400, false)">Buy Now</button>
-        </div>
-    </div>
-
-    <div id="checkPage" class="page">
-        <h3 id="payTitle">Payment</h3>
-        <div id="rechargeBox" style="display:none;" class="card">
-            <input type="number" id="rechargeAmount" class="pay-input" placeholder="কত টাকা রিচার্জ করবেন?">
-        </div>
-        
-        <div class="card">
-            <p>সিলেক্ট করুন:</p>
-            <div class="pay-card" onclick="selectMethod('bKash')">bKash (01956273611)</div>
-            <div class="pay-card" onclick="selectMethod('Nagad')">Nagad (01956273611)</div>
-        </div>
-
-        <div id="confirmBox" style="display:none;" class="card">
-            <p id="payGuide"></p>
-            <input type="number" id="senderNum" class="pay-input" placeholder="আপনার নাম্বার">
-            <input type="text" id="trxID" class="pay-input" placeholder="TrxID (ট্রানজেকশন আইডি)">
-            <button class="btn-buy" onclick="submitOrder()">Confirm Request</button>
-        </div>
-    </div>
-
-    <div id="accPage" class="page">
-        <div class="card" style="text-align:center; background:var(--daraz-orange); color:white;">
-            <h3 id="uNameDisp">User</h3>
-            <p id="uIDLabel">ID: Loading...</p>
-            <p style="font-size: 20px;">Balance: ৳ <span id="uBalance">0</span></p>
-            <button onclick="startCheckout('Recharge', 0, true)" style="background:white; color:var(--daraz-orange); border:none; padding:5px 15px; border-radius:20px; font-weight:bold;">Recharge Now</button>
-        </div>
-        <div class="card" style="display:flex; justify-content:space-around;">
-            <div onclick="adminDoor()" style="color:red; font-weight:bold;">🧬 Admin</div>
-            <div onclick="localStorage.clear(); location.reload();">🚪 Logout</div>
-        </div>
-        <div id="historyBox"></div>
-    </div>
-
-    <div class="bottom-nav">
-        <div class="nav-item" onclick="switchPage('homePage')">🏠<br>Home</div>
-        <div class="nav-item" onclick="switchPage('accPage')">👤<br>Account</div>
-    </div>
-</div>
-
-<div id="adminUI">
-    <div class="admin-header">
-        <span>Admin Panel</span>
-        <button onclick="document.getElementById('adminUI').style.display='none'; document.getElementById('userUI').style.display='block';" style="background:red; color:white; border:none; padding:5px;">Back</button>
-    </div>
-    <div style="padding:15px;">
-        <h3>Pending Orders / Recharges</h3>
-        <table border="1">
-            <thead><tr><th>User</th><th>Item</th><th>Amount</th><th>TrxID</th><th>Action</th></tr></thead>
-            <tbody id="adminTBody"></tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    let tempOrder = { name: "", price: 0, isRecharge: false, method: "" };
-
-    function checkLogin() {
-        if(localStorage.getItem("isLoggedIn") === "true") {
-            document.getElementById("authPage").style.display = "none";
-            updateUI();
-        }
-    }
-
-    function handleAuth() {
-        let name = document.getElementById("authName").value;
-        if(!name) return;
-        localStorage.setItem("u_name", name);
-        localStorage.setItem("u_id", "SY-" + Math.floor(1000+Math.random()*9000));
-        localStorage.setItem("isLoggedIn", "true");
-        location.reload();
-    }
-
-    function updateUI() {
-        document.getElementById("uNameDisp").innerText = localStorage.getItem("u_name");
-        document.getElementById("uIDLabel").innerText = "ID: " + localStorage.getItem("u_id");
-        document.getElementById("uBalance").innerText = localStorage.getItem("s_wallet") || "0";
-        loadHistory();
-    }
-
-    function switchPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-        document.getElementById(id).classList.add('active-page');
-    }
-
-    function startCheckout(name, price, isRecharge) {
-        tempOrder = { name, price, isRecharge };
-        document.getElementById("payTitle").innerText = isRecharge ? "Recharge Wallet" : "Checkout: " + name;
-        document.getElementById("rechargeBox").style.display = isRecharge ? "block" : "none";
-        document.getElementById("confirmBox").style.display = "none";
-        switchPage('checkPage');
-    }
-
-    function selectMethod(m) {
-        tempOrder.method = m;
-        if(tempOrder.isRecharge) {
-            tempOrder.price = document.getElementById("rechargeAmount").value;
-            if(!tempOrder.price || tempOrder.price < 10) return alert("মিনিমাম ১০ টাকা রিচার্জ করুন");
-        }
-        document.getElementById("confirmBox").style.display = "block";
-        document.getElementById("payGuide").innerText = m + " (01956273611) এ ৳" + tempOrder.price + " সেন্ড মানি করে TrxID দিন।";
-    }
-
-    function submitOrder() {
-        let trx = document.getElementById("trxID").value;
-        let phone = document.getElementById("senderNum").value;
-        if(!trx || !phone) return alert("সব তথ্য দিন");
-
-        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        orders.push({
-            uID: localStorage.getItem("u_id"),
-            uName: localStorage.getItem("u_name"),
-            product: tempOrder.name,
-            amount: tempOrder.price,
-            trx: trx,
-            type: tempOrder.isRecharge ? "Recharge" : "Order",
-            status: "Pending"
-        });
-        localStorage.setItem("s_orders", JSON.stringify(orders));
-        alert("আপনার রিকোয়েস্ট পাঠানো হয়েছে!");
-        switchPage('accPage');
-        updateUI();
-    }
-
-    function loadHistory() {
-        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        let myID = localStorage.getItem("u_id");
-        document.getElementById("historyBox").innerHTML = "<h4>Recent History</h4>" + orders.filter(o => o.uID === myID).map(o => `
-            <div class="card" style="font-size:12px;">
-                <b>${o.product}</b> - ৳${o.amount} <br>
-                Status: <span style="color:${o.status==='Pending'?'orange':'green'}">${o.status}</span>
+    <div class="container">
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="product-image">Product Image</div>
+                <div class="product-info">
+                    <div class="product-title">Street Style Hoodie</div>
+                    <div class="product-price">৳ ১২৫০</div>
+                    <a href="https://wa.me/YOUR_NUMBER?text=I want to buy Street Style Hoodie" class="buy-btn">অর্ডার করতে হোয়াটসঅ্যাপ করুন</a>
+                </div>
             </div>
-        `).reverse().join('') || "No history.";
-    }
 
-    // Admin
-    function adminDoor() {
-        if(prompt("Admin Password:") === "2314") {
-            document.getElementById("userUI").style.display = "none";
-            document.getElementById("adminUI").style.display = "block";
-            loadAdminTable();
-        }
-    }
+            <div class="product-card">
+                <div class="product-image">Product Image</div>
+                <div class="product-info">
+                    <div class="product-title">Premium Cargo Pant</div>
+                    <div class="product-price">৳ ৯৫০</div>
+                    <a href="https://wa.me/YOUR_NUMBER?text=I want to buy Premium Cargo Pant" class="buy-btn">অর্ডার করতে হোয়াটসঅ্যাপ করুন</a>
+                </div>
+            </div>
 
-    function loadAdminTable() {
-        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        document.getElementById("adminTBody").innerHTML = orders.map((o, i) => o.status === 'Pending' ? `
-            <tr>
-                <td>${o.uName}</td>
-                <td>${o.product}</td>
-                <td>৳${o.amount}</td>
-                <td>${o.trx}</td>
-                <td><button onclick="approveOrder(${i})">Approve</button></td>
-            </tr>
-        ` : '').join('');
-    }
+            <div class="product-card">
+                <div class="product-image">Product Image</div>
+                <div class="product-info">
+                    <div class="product-title">Oversized T-Shirt</div>
+                    <div class="product-price">৳ ৬৫০</div>
+                    <a href="https://wa.me/YOUR_NUMBER?text=I want to buy Oversized T-Shirt" class="buy-btn">অর্ডার করতে হোয়াটসঅ্যাপ করুন</a>
+                </div>
+            </div>
 
-    function approveOrder(index) {
-        let orders = JSON.parse(localStorage.getItem("s_orders") || "[]");
-        orders[index].status = "Confirmed";
-        
-        if(orders[index].type === "Recharge") {
-            let currentWallet = parseInt(localStorage.getItem("s_wallet") || "0");
-            localStorage.setItem("s_wallet", currentWallet + parseInt(orders[index].amount));
-        }
-        
-        localStorage.setItem("s_orders", JSON.stringify(orders));
-        alert("Approved!");
-        loadAdminTable();
-        updateUI();
-    }
-</script>
+            <div class="product-card">
+                <div class="product-image">Product Image</div>
+                <div class="product-info">
+                    <div class="product-title">Streetwear Cap</div>
+                    <div class="product-price">৳ ৪৫০</div>
+                    <a href="https://wa.me/YOUR_NUMBER?text=I want to buy Streetwear Cap" class="buy-btn">অর্ডার করতে হোয়াটসঅ্যাপ করুন</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
